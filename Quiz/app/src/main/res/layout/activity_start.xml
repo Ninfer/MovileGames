@@ -5,17 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/slate_gray"
-    tools:context=".MainActivity">
+    tools:context=".Start_Activity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="166dp"
+        android:layout_height="175dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:ignore="ImageContrastCheck" />
 
     <Button
-        android:id="@+id/add_button"
+        android:id="@+id/jugar_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="128dp"
         android:backgroundTint="@color/opal"
-        android:text="AÑADIR"
+        android:text="JUGAR"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -24,19 +37,29 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/terminar_button"
+        android:id="@+id/salir_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:backgroundTint="@color/opal"
-        android:text="TERMINAR"
+        android:text="SALIR"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_button" />
+        app:layout_constraintTop_toBottomOf="@+id/jugar_button" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="250dp"
+        android:text="Título"
+        app:layout_constraintBottom_toTopOf="@+id/jugar_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
