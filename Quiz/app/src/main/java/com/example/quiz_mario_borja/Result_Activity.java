@@ -19,15 +19,18 @@ public class Result_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         restartButton = findViewById(R.id.restart_button);
-        resultText = findViewById(R.id.result_text);
+        resultText = findViewById(R.id.result_num);
 
-        //resultText.setText(MainActivity.jofrancos);
+        String result = String.valueOf(getIntent().getExtras().getInt("jofrancos"));
+        resultText.setText(result);
 
-        Intent intent = new Intent(Result_Activity.this, MainActivity.class);
+
 
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Result_Activity.this, MainActivity.class);
+                finish();
                 startActivity(intent);
             }
         });
