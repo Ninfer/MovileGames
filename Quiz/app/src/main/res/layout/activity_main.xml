@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/num_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -29,7 +29,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/question_text"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="16dp"
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/time_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/lavender_gray"
@@ -61,10 +61,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/opt1"
+        android:id="@+id/button_A"
         android:layout_width="180dp"
         android:layout_height="130dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/platinum"
         android:text="A"
@@ -73,11 +73,11 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <Button
-        android:id="@+id/opt2"
+        android:id="@+id/button_B"
         android:layout_width="180dp"
         android:layout_height="130dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/platinum"
         android:text="B"
         android:textColor="@color/black"
@@ -85,46 +85,56 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <Button
-        android:id="@+id/opt3"
+        android:id="@+id/button_C"
         android:layout_width="180dp"
         android:layout_height="130dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/platinum"
         android:text="C"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/terminar_button"
+        app:layout_constraintBottom_toTopOf="@+id/next_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/opt4"
+        android:id="@+id/button_D"
         android:layout_width="180dp"
         android:layout_height="130dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/platinum"
         android:text="D"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/add_button"
+        app:layout_constraintBottom_toTopOf="@+id/exit_button"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/add_button"
+        android:id="@+id/exit_button"
         android:layout_width="118dp"
         android:layout_height="62dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="32dp"
-        android:text="Añadir"
+        android:text="Salir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/terminar_button"
+        android:id="@+id/next_button"
         android:layout_width="118dp"
         android:layout_height="62dp"
         android:layout_marginStart="50dp"
         android:layout_marginBottom="32dp"
-        android:text="Terminar"
+        android:text="Siguiente"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="118dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="32dp"
+        android:text="TERMINAR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
