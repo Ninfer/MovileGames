@@ -4,18 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Variables de layout
     private Button nextButton, finishButton, exitButton, AButton, BButton, CButton, DButton;
     private TextView numText, questionText, timeText;
+    //Variables de gestion de preguntas
+    private static final long START_TIME_IN_MILLIS = 60000; //1 min (creo)
     private int questionOrder, questionSum, trueButton;
+    private long timeInMilliseconds = START_TIME_IN_MILLIS;
+    private CountDownTimer countDownTimer;
+    private boolean timerRunning, answerChoosen;
+    //Puntuación del juego
     public int jofrancos = 0;
 
     @Override
@@ -42,24 +51,37 @@ public class MainActivity extends AppCompatActivity {
         Intent outIntent = new Intent(MainActivity.this, Start_Activity.class);
         Random rand = new Random();
 
+        //Inicio de las preguntas al empezar la actividad. Lógica de la estructura iniciada
         questionSum = 1;
-        questionOrder = rand.nextInt(5);
-        resetButtons();
-        chooseQuestion(questionOrder);
+        answerChoosen = false;
+        timerRunning = false;                            //Inicio de la lógica del timer
+        questionOrder = rand.nextInt(5);          //Numero aleatorio por el que empezarán las preguntas
+        resetButtons();                                 //Se asegura que los botones tienen los colores predeterminados
+        chooseQuestion(questionOrder);                  //Inicio aleatorio del carruesl de preguntas
+        startStop();                                    //Inicio del contador de tiempo
 
+        //Funcionalidad de los 4 botones de juego, los 4 funcionan igual
         AButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(trueButton == 1){
+                //Comprueba si la tecla pulsada es la correcta y si está dentro de tiempo.
+                // Si es así, suma los puntos, cambia el color del botón y se asegura de que has elegido una opción
+                if(trueButton == 1 && !answerChoosen){
                     AButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
+                    answerChoosen = true;
                 }else{
                     AButton.setBackgroundColor(getResources().getColor(R.color.red));
+                    answerChoosen = true;
                 }
+                stopTimer();
+                timerRunning = false;
                 timeText.setText("FIN");
                 //nextButton.setEnabled(true);
                 //nextButton.setVisibility(View.VISIBLE);
 
+                //Lógica para resetear las preguntas y cambiar la funcionalidad del botón si
+                // se correspondía con la última pregunta
                 if (questionSum == 5){
                     //nextButton.setEnabled(false);
                     finishButton.setEnabled(true);
@@ -73,12 +95,16 @@ public class MainActivity extends AppCompatActivity {
         BButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(trueButton == 2){
+                if(trueButton == 2 && !answerChoosen){
                     BButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
+                    answerChoosen = true;
                 }else{
                     BButton.setBackgroundColor(getResources().getColor(R.color.red));
+                    answerChoosen = true;
                 }
+                stopTimer();
+                timerRunning = false;
                 timeText.setText("FIN");
                 //nextButton.setEnabled(true);
                 //nextButton.setVisibility(View.VISIBLE);
@@ -96,12 +122,16 @@ public class MainActivity extends AppCompatActivity {
         CButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(trueButton == 3){
+                if(trueButton == 3 && !answerChoosen){
                     CButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
+                    answerChoosen = true;
                 }else{
                     CButton.setBackgroundColor(getResources().getColor(R.color.red));
+                    answerChoosen = true;
                 }
+                stopTimer();
+                timerRunning = false;
                 timeText.setText("FIN");
                 //nextButton.setEnabled(true);
                 //nextButton.setVisibility(View.VISIBLE);
@@ -119,12 +149,16 @@ public class MainActivity extends AppCompatActivity {
         DButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(trueButton == 4){
+                if(trueButton == 4 && !answerChoosen){
                     DButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
+                    answerChoosen = true;
                 }else{
                     DButton.setBackgroundColor(getResources().getColor(R.color.red));
+                    answerChoosen = true;
                 }
+                stopTimer();
+                timerRunning = false;
                 timeText.setText("FIN");
                 //nextButton.setEnabled(true);
                 //nextButton.setVisibility(View.VISIBLE);
@@ -141,11 +175,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //Funcionalidad de los botones del foot
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, String.valueOf(jofrancos) + " Jofrancos conseguidos!", Toast.LENGTH_LONG).show();
+                //Muestra un mensaje de tipo "Toast" con los puntos conseguidos hasta el momento
+                // y sale al menú pricipal.
+                Toast.makeText(MainActivity.this, "¡"+ String.valueOf(jofrancos) + " Jofrancos conseguidos!", Toast.LENGTH_LONG).show();
                 startActivity(outIntent);
             }
         });
@@ -159,12 +195,17 @@ public class MainActivity extends AppCompatActivity {
                     questionOrder++;
                 }
 
+                //Genera la siguiente pregunta, resetea los colores de los botones en default,
+                //resetea el timer y vuelve a empezar tras pulsar.
                 questionSum++;
+                answerChoosen = false;
                 resetButtons();
+                resetTimer();
                 chooseQuestion(questionOrder);
+                startStop();
             }
         });
-
+        //Botón que aparece al completar las 5 preguntas, sirve para lanzar la actividad de resultados
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,13 +213,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        updateTimer();
     }
+
+    //Carrusel de preguntas definidas a fuego en el código, se establece el texto de la pregunta,
+    // la respuesta de los botones y el banner de número de preguntas. Guarda con un id el botón
+    // que contiene la respuesta correcta asociada con el texto que se le ha asignado.
     private void chooseQuestion(int num){
         switch (num){
             case 0:
                 numText.setText(String.valueOf(questionSum) + "/5");
                 questionText.setText("¿Qué año pisó la luna el ser humano?");
-                //timeText.setText();
                 AButton.setText("1966");
                 trueButton = 1;
                 BButton.setText("1976");
@@ -245,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 numText.setText(String.valueOf(questionSum) + "/5");
-                questionText.setText("¿Que año se publicó el libro 'El Capital' de Karl Marx");
+                questionText.setText("¿Que año se publicó el libro 'El Capital' de Karl Marx?");
                 //timeText.setText();
                 AButton.setText("1917");
                 BButton.setText("1867");
@@ -265,6 +310,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    //Método que devuelve los botones a sus colores por defecto al comenzar una nueva pregunta
     private void resetButtons(){
         AButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         BButton.setBackgroundColor(getResources().getColor(R.color.platinum));
@@ -278,5 +325,64 @@ public class MainActivity extends AppCompatActivity {
         finishButton.setVisibility(View.INVISIBLE);
 
         timeText.setText("INICIO");
+    }
+
+    //Lógica de funcionamiento del relog a través de la funcionalidad de CountDownTimer y un flag
+    // que recoge cuándo el relog está en funcionamiento
+    public void startStop(){
+        if(timerRunning){
+            stopTimer();
+        }else{
+            starTimer();
+        }
+    }
+
+    public void starTimer(){
+        //Se crea el objeto "cuenta atrás" con el tiempo que queremos y el paso del intervalo (1000)
+        countDownTimer = new CountDownTimer(timeInMilliseconds, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeInMilliseconds = millisUntilFinished;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                //Si se acaba el tiempo, desabilita los puntos asociados a los botones de victoria y
+                // pone visible el botón para pasar de pregunta.
+                timerRunning = false;
+                answerChoosen = true;
+                nextButton.setEnabled(true);
+                nextButton.setVisibility(View.VISIBLE);
+                timeText.setText("FIN");
+            }
+        }.start();
+
+        timerRunning = true;
+    }
+
+    public void stopTimer(){
+        countDownTimer.cancel();
+        timerRunning = false;
+    }
+
+    //Método llamado por cada tick del reloj. Hace un set en el botón de los valores actuales de tiempo
+    public void updateTimer(){
+        int minutes = (int) timeInMilliseconds / 60000;
+        int seconds = (int) timeInMilliseconds % 60000 / 1000;
+        /*
+        String timeLeftText;
+        timeLeftText = "" + minutes;
+        timeLeftText += ":";
+        if(seconds < 10) timeLeftText += "0";
+        timeLeftText += seconds
+         */
+        String timeLeftText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        timeText.setText(timeLeftText);
+    }
+
+    public void resetTimer(){
+        timeInMilliseconds = START_TIME_IN_MILLIS;
+        updateTimer();
     }
 }
