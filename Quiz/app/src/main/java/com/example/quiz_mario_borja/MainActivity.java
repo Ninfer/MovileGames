@@ -25,12 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Asignación de los botones a las variables
         nextButton = findViewById(R.id.next_button);
-        nextButton.setEnabled(false);
-        nextButton.setVisibility(View.INVISIBLE);
-
         finishButton = findViewById(R.id.finish_button);
-        finishButton.setEnabled(false);
-        finishButton.setVisibility(View.INVISIBLE);
 
         exitButton = findViewById(R.id.exit_button);
         AButton = findViewById(R.id.button_A);
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         questionSum = 1;
         questionOrder = rand.nextInt(5);
-        resertButtons();
+        resetButtons();
         chooseQuestion(questionOrder);
 
         AButton.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +57,17 @@ public class MainActivity extends AppCompatActivity {
                     AButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
                 timeText.setText("FIN");
-                nextButton.setEnabled(true);
-                nextButton.setVisibility(View.VISIBLE);
+                //nextButton.setEnabled(true);
+                //nextButton.setVisibility(View.VISIBLE);
+
+                if (questionSum == 5){
+                    //nextButton.setEnabled(false);
+                    finishButton.setEnabled(true);
+                    finishButton.setVisibility(View.VISIBLE);
+                } else {
+                    nextButton.setEnabled(true);
+                    nextButton.setVisibility(View.VISIBLE);
+                }
             }
         });
         BButton.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +80,17 @@ public class MainActivity extends AppCompatActivity {
                     BButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
                 timeText.setText("FIN");
-                nextButton.setEnabled(true);
-                nextButton.setVisibility(View.VISIBLE);
+                //nextButton.setEnabled(true);
+                //nextButton.setVisibility(View.VISIBLE);
+
+                if (questionSum == 5){
+                    //nextButton.setEnabled(false);
+                    finishButton.setEnabled(true);
+                    finishButton.setVisibility(View.VISIBLE);
+                } else {
+                    nextButton.setEnabled(true);
+                    nextButton.setVisibility(View.VISIBLE);
+                }
             }
         });
         CButton.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +103,17 @@ public class MainActivity extends AppCompatActivity {
                     CButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
                 timeText.setText("FIN");
-                nextButton.setEnabled(true);
-                nextButton.setVisibility(View.VISIBLE);
+                //nextButton.setEnabled(true);
+                //nextButton.setVisibility(View.VISIBLE);
+
+                if (questionSum == 5){
+                    //nextButton.setEnabled(false);
+                    finishButton.setEnabled(true);
+                    finishButton.setVisibility(View.VISIBLE);
+                } else {
+                    nextButton.setEnabled(true);
+                    nextButton.setVisibility(View.VISIBLE);
+                }
             }
         });
         DButton.setOnClickListener(new View.OnClickListener() {
@@ -104,8 +126,18 @@ public class MainActivity extends AppCompatActivity {
                     DButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
                 timeText.setText("FIN");
-                nextButton.setEnabled(true);
-                nextButton.setVisibility(View.VISIBLE);
+                //nextButton.setEnabled(true);
+                //nextButton.setVisibility(View.VISIBLE);
+
+                if (questionSum == 5){
+                    //nextButton.setEnabled(false);
+                    finishButton.setEnabled(true);
+                    finishButton.setVisibility(View.VISIBLE);
+                } else {
+                    nextButton.setEnabled(true);
+                    nextButton.setVisibility(View.VISIBLE);
+                }
+
             }
         });
 
@@ -128,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 questionSum++;
-                resertButtons();
+                resetButtons();
                 chooseQuestion(questionOrder);
             }
         });
@@ -153,11 +185,11 @@ public class MainActivity extends AppCompatActivity {
                 CButton.setText("1866");
                 DButton.setText("1956");
 
-                if(questionSum == 5){
+                /*if(questionSum == 5){
                     nextButton.setEnabled(false);
                     finishButton.setEnabled(true);
                     finishButton.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 break;
             case 1:
@@ -170,11 +202,11 @@ public class MainActivity extends AppCompatActivity {
                 CButton.setText("2016");
                 DButton.setText("2017");
 
-                if(questionSum == 5){
+                /*if(questionSum == 5){
                     nextButton.setEnabled(false);
                     finishButton.setEnabled(true);
                     finishButton.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 break;
             case 2:
@@ -187,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
                 trueButton = 3;
                 DButton.setText("1983");
 
-                if(questionSum == 5){
+                /*if(questionSum == 5){
                     nextButton.setEnabled(false);
                     finishButton.setEnabled(true);
                     finishButton.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 break;
             case 3:
@@ -204,11 +236,11 @@ public class MainActivity extends AppCompatActivity {
                 DButton.setText("1973");
                 trueButton = 4;
 
-                if(questionSum == 5){
+                /*if(questionSum == 5){
                     nextButton.setEnabled(false);
                     finishButton.setEnabled(true);
                     finishButton.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 break;
             case 4:
@@ -221,11 +253,11 @@ public class MainActivity extends AppCompatActivity {
                 CButton.setText("1887");
                 DButton.setText("1697");
 
-                if(questionSum == 5){
+                /*if(questionSum == 5){
                     nextButton.setEnabled(false);
                     finishButton.setEnabled(true);
                     finishButton.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 break;
             default:
@@ -233,11 +265,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void resertButtons(){
+    private void resetButtons(){
         AButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         BButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         CButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         DButton.setBackgroundColor(getResources().getColor(R.color.platinum));
+
+        nextButton.setEnabled(false);
+        nextButton.setVisibility(View.INVISIBLE);
+
+        finishButton.setEnabled(false);
+        finishButton.setVisibility(View.INVISIBLE);
+
         timeText.setText("INICIO");
     }
 }

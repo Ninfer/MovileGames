@@ -22,7 +22,7 @@ public class Result_Activity extends AppCompatActivity {
         resultText = findViewById(R.id.result_num);
 
         String result = String.valueOf(getIntent().getExtras().getInt("jofrancos"));
-        resultText.setText(result);
+        resultText.setText(result + " JOFRANCOS");
 
 
 
