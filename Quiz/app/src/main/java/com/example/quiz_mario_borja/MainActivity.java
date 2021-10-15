@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Variables de layout
     private Button nextButton, finishButton, exitButton, AButton, BButton, CButton, DButton;
-    private TextView numText, questionText, timeText;
+    private TextView numText, questionText, timeText, helpText;
+    private Switch helpSwitch;
     //Variables de gestion de preguntas
     private static final long START_TIME_IN_MILLIS = 60000; //1 min (creo)
     private int questionOrder, questionSum, trueButton;
@@ -35,17 +37,19 @@ public class MainActivity extends AppCompatActivity {
         //Asignación de los botones a las variables
         nextButton = findViewById(R.id.next_button);
         finishButton = findViewById(R.id.finish_button);
-
         exitButton = findViewById(R.id.exit_button);
         AButton = findViewById(R.id.button_A);
         BButton = findViewById(R.id.button_B);
         CButton = findViewById(R.id.button_C);
         DButton = findViewById(R.id.button_D);
 
+        helpSwitch = findViewById(R.id.help_switch);
+
         //Asignación de los textos a las variables
         numText = findViewById(R.id.num_text);
         questionText = findViewById(R.id.question_text);
         timeText = findViewById(R.id.time_text);
+        helpText = findViewById(R.id.help_text);
 
         Intent intent = new Intent(MainActivity.this, Result_Activity.class);
         Intent outIntent = new Intent(MainActivity.this, Start_Activity.class);
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Inicio de las preguntas al empezar la actividad. Lógica de la estructura iniciada
         questionSum = 1;
+        helpSwitch.setChecked(false);
+        helpText.setVisibility(View.INVISIBLE);
         answerChoosen = false;
         timerRunning = false;                            //Inicio de la lógica del timer
         questionOrder = rand.nextInt(5);          //Numero aleatorio por el que empezarán las preguntas
@@ -199,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                 //resetea el timer y vuelve a empezar tras pulsar.
                 questionSum++;
                 answerChoosen = false;
+                helpSwitch.setChecked(false);
+                helpText.setVisibility(View.INVISIBLE);
                 resetButtons();
                 resetTimer();
                 chooseQuestion(questionOrder);
@@ -216,6 +224,17 @@ public class MainActivity extends AppCompatActivity {
         updateTimer();
     }
 
+    //Funcionalidad del boton Switch
+    public void switchButton(View view){
+        if (view.getId() == R.id.help_switch){
+            if(helpSwitch.isChecked()){
+                helpText.setVisibility(View.VISIBLE);
+            }else{
+                helpText.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
     //Carrusel de preguntas definidas a fuego en el código, se establece el texto de la pregunta,
     // la respuesta de los botones y el banner de número de preguntas. Guarda con un id el botón
     // que contiene la respuesta correcta asociada con el texto que se le ha asignado.
@@ -224,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 numText.setText(String.valueOf(questionSum) + "/5");
                 questionText.setText("¿Qué año pisó la luna el ser humano?");
+                helpText.setText("La guerra fría estaba en su apogeo");
                 AButton.setText("1966");
                 trueButton = 1;
                 BButton.setText("1976");
@@ -240,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 numText.setText(String.valueOf(questionSum) + "/5");
                 questionText.setText("¿Qué año salio el DLC The Last of Us: Left Behind?");
-                //timeText.setText();
+                helpText.setText("Salió un año después que el juego original");
                 AButton.setText("2013");
                 BButton.setText("2014");
                 trueButton = 2;
@@ -257,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
             case 2:
                 numText.setText(String.valueOf(questionSum) + "/5");
                 questionText.setText("¿Qué año se publicó el juego de ROL de mesa 'Dungeons & Dragons'?");
-                //timeText.setText();
+                helpText.setText("20 años después de la publicación del libro 'El señor de los anillos'");
                 AButton.setText("1980");
                 BButton.setText("1966");
                 CButton.setText("1974");
@@ -274,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 numText.setText(String.valueOf(questionSum) + "/5");
                 questionText.setText("¿Qué año llegó al espacio el primer astronauta Español?");
-                //timeText.setText();
+                helpText.setText("Tiene trampa");
                 AButton.setText("2001");
                 BButton.setText("1995");
                 CButton.setText("1965");
@@ -291,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 numText.setText(String.valueOf(questionSum) + "/5");
                 questionText.setText("¿Que año se publicó el libro 'El Capital' de Karl Marx?");
-                //timeText.setText();
+                helpText.setText("Fue escrito tras el inicio de la revolución industrial en Europa");
                 AButton.setText("1917");
                 BButton.setText("1867");
                 trueButton = 2;
