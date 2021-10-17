@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView numText, questionText, timeText, helpText;
     private Switch helpSwitch;
     //Variables de gestion de preguntas
-    private static final long START_TIME_IN_MILLIS = 60000; //1 min (creo)
+    private static final long START_TIME_IN_MILLIS = 10000; //10 s
     private int questionOrder, questionSum, trueButton;
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
@@ -72,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Comprueba si la tecla pulsada es la correcta y si está dentro de tiempo.
                 // Si es así, suma los puntos, cambia el color del botón y se asegura de que has elegido una opción
+
+                BButton.setEnabled(false);
+                CButton.setEnabled(false);
+                DButton.setEnabled(false);
+
                 if(trueButton == 1 && !answerChoosen){
                     AButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
@@ -101,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
         BButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AButton.setEnabled(false);
+                CButton.setEnabled(false);
+                DButton.setEnabled(false);
+
                 if(trueButton == 2 && !answerChoosen){
                     BButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
@@ -128,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
         CButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AButton.setEnabled(false);
+                BButton.setEnabled(false);
+                DButton.setEnabled(false);
+
                 if(trueButton == 3 && !answerChoosen){
                     CButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
@@ -155,6 +170,11 @@ public class MainActivity extends AppCompatActivity {
         DButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AButton.setEnabled(false);
+                BButton.setEnabled(false);
+                CButton.setEnabled(false);
+
                 if(trueButton == 4 && !answerChoosen){
                     DButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
@@ -333,6 +353,10 @@ public class MainActivity extends AppCompatActivity {
 
     //Método que devuelve los botones a sus colores por defecto al comenzar una nueva pregunta
     private void resetButtons(){
+        AButton.setEnabled(true);
+        BButton.setEnabled(true);
+        CButton.setEnabled(true);
+        DButton.setEnabled(true);
         AButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         BButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         CButton.setBackgroundColor(getResources().getColor(R.color.platinum));
@@ -347,8 +371,8 @@ public class MainActivity extends AppCompatActivity {
         timeText.setText("INICIO");
     }
 
-    //Lógica de funcionamiento del relog a través de la funcionalidad de CountDownTimer y un flag
-    // que recoge cuándo el relog está en funcionamiento
+    //Lógica de funcionamiento del reloj a través de la funcionalidad de CountDownTimer y un flag
+    // que recoge cuándo el reloj está en funcionamiento
     public void startStop(){
         if(timerRunning){
             stopTimer();
@@ -372,8 +396,20 @@ public class MainActivity extends AppCompatActivity {
                 // pone visible el botón para pasar de pregunta.
                 timerRunning = false;
                 answerChoosen = true;
-                nextButton.setEnabled(true);
-                nextButton.setVisibility(View.VISIBLE);
+
+                AButton.setEnabled(false);
+                BButton.setEnabled(false);
+                CButton.setEnabled(false);
+                DButton.setEnabled(false);
+
+                if (questionSum == 5){
+                    //nextButton.setEnabled(false);
+                    finishButton.setEnabled(true);
+                    finishButton.setVisibility(View.VISIBLE);
+                } else {
+                    nextButton.setEnabled(true);
+                    nextButton.setVisibility(View.VISIBLE);
+                }
                 timeText.setText("FIN");
             }
         }.start();
