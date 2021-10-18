@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView numText, questionText, timeText, helpText;
     private Switch helpSwitch;
     //Variables de gestion de preguntas
-    private static final long START_TIME_IN_MILLIS = 10000; //10 s
+    private static final long START_TIME_IN_MILLIS = 15000; //15 s
     private int questionOrder, questionSum, trueButton;
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
