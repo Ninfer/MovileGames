@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quiz_mario_borja.db.DbHelper;
+import com.example.quiz_mario_borja.db.dbQuiz;
 
 import java.util.Locale;
 import java.util.Random;
