@@ -3,6 +3,7 @@ package com.example.quiz_mario_borja;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quiz_mario_borja.db.DbHelper;
-import com.example.quiz_mario_borja.db.dbQuiz;
+import com.example.quiz_mario_borja.db.DbQuiz;
 
 import java.util.Locale;
 import java.util.Random;
@@ -39,16 +40,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Creación de la Base de Datos
-        DbHelper dbHelper = new DbHelper(MainActivity.this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Comprobación de la creación de la Base de Datos
-        if (db != null){
-            Log.i("DB", "BASE DE DATOS CREADA");
-        } else {
-            Log.w("DB", "ERROR AL CREAR LA BASE DE DATOS");
-        }
-
         //Asignación de los botones a las variables
         nextButton = findViewById(R.id.next_button);
         finishButton = findViewById(R.id.finish_button);
@@ -69,6 +60,32 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Result_Activity.class);
         Intent outIntent = new Intent(MainActivity.this, Start_Activity.class);
         Random rand = new Random();
+
+        // Creación de la Base de Datos
+        DbHelper dbHelper = new DbHelper(MainActivity.this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // Comprobación de la creación de la Base de Datos
+        if (db != null){
+            Log.i("DB", "BASE DE DATOS CREADA");
+        } else {
+            Log.w("DB", "ERROR AL CREAR LA BASE DE DATOS");
+        }
+        // Se añaden las preguntas si es la primera vez que se abre la app
+        DbQuiz dbQuiz = new DbQuiz(MainActivity.this);
+        switch(getFirstTimeRun()){
+            case 0: // Caso para la primera vez que abres la app
+                dbQuiz.addQuestions();
+                Log.i("DB", "Preguntas añadidas por primera vez");
+                break;
+            case 1: // Caso para la app ya iniciada
+                Log.i("DB", "Las preguntas ya fueron añadidas");
+                break;
+            case 2: // Caso de actualización de la app
+                dbHelper.onUpgrade(db,1,2);
+                dbQuiz.addQuestions();
+                Log.i("DB", "Lista de Preguntas actualizada");
+                break;
+        }
 
         //Inicio de las preguntas al empezar la actividad. Lógica de la estructura iniciada
         questionSum = 1;
@@ -257,6 +274,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         updateTimer();
+    }
+
+    // Método que recoge si es la primera vez que se inicia la app para crear la base de datos
+    private int getFirstTimeRun() {
+        SharedPreferences sp = getSharedPreferences("MYAPP", 0);
+        int result, currentVersionCode = BuildConfig.VERSION_CODE;
+        int lastVersionCode = sp.getInt("FIRSTTIMERUN", -1);
+        if (lastVersionCode == -1) result = 0; else
+            result = (lastVersionCode == currentVersionCode) ? 1 : 2;
+        sp.edit().putInt("FIRSTTIMERUN", currentVersionCode).apply();
+        return result;
     }
 
     //Funcionalidad del boton Switch
