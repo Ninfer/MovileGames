@@ -42,6 +42,28 @@ public class DbQuiz extends DbHelper{
         return id;
     }
 
+
+    public long insertPlayer(String nombre, int puntos){
+
+        long id = 0;
+
+        try {
+            DbHelper dbHelper = new DbHelper(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put("nombre", nombre);
+            values.put("puntos", puntos);
+
+            id = db.insert(TABLE_RESULT, null, values);
+
+        } catch (Exception ex) {
+            ex.toString();
+        }
+
+        return id;
+    }
+
     // Agrega los datos de las preguntas a la base de datos
     public void addQuestions(){
         String pregunta, ayuda, abutton, bbutton, cbutton, dbutton;

@@ -2,6 +2,7 @@ package com.example.quiz_mario_borja;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 // Comprueba si la tecla pulsada es la correcta y si está dentro de tiempo.
                 // Si es así, suma los puntos, cambia el color del botón y se asegura de que has elegido una opción
 
+                AButton.setEnabled(false);
                 BButton.setEnabled(false);
                 CButton.setEnabled(false);
                 DButton.setEnabled(false);
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 AButton.setEnabled(false);
+                BButton.setEnabled(false);
                 CButton.setEnabled(false);
                 DButton.setEnabled(false);
 
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
                 AButton.setEnabled(false);
                 BButton.setEnabled(false);
+                CButton.setEnabled(false);
                 DButton.setEnabled(false);
 
                 if(trueButton == 3){
@@ -206,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 AButton.setEnabled(false);
                 BButton.setEnabled(false);
                 CButton.setEnabled(false);
+                DButton.setEnabled(false);
 
                 if(trueButton == 4){
                     DButton.setBackgroundColor(getResources().getColor(R.color.blue));

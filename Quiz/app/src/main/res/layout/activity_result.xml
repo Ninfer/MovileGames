@@ -42,38 +42,24 @@
         app:layout_constraintTop_toBottomOf="@+id/restart_button" />
 
     <LinearLayout
+        android:id="@+id/layout_manager"
         android:layout_width="0dp"
         android:layout_height="275dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="32dp"
         android:background="@color/lavender_gray"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/result_text"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RV_Resultados"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:text="Has conseguido una puntuación de"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/result_num"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

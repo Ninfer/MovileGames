@@ -11,6 +11,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NOM = "quiz.db";
     public static final String TABLE_QUESTIONS = "table_questions";
+    public static final String TABLE_RESULT = "table_result";
 
 
     public DbHelper(@Nullable Context context) {
@@ -28,11 +29,17 @@ public class DbHelper extends SQLiteOpenHelper {
                 "cbutton TEXT NOT NULL," +
                 "dbutton TEXT NOT NULL," +
                 "correct INTEGER NOT NULL)");
+
+        db.execSQL("CREATE TABLE " + TABLE_RESULT + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "nombre TEXT NOT NULL," +
+                "puntos INTEGER NOT NULL)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE " + TABLE_QUESTIONS);
+        db.execSQL("DROP TABLE " + TABLE_RESULT);
         onCreate(db);
     }
 }

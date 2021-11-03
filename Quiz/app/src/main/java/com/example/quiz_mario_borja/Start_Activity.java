@@ -130,7 +130,7 @@ public class Start_Activity extends AppCompatActivity {
 
     // Método que recoge si es la primera vez que se inicia la app para crear la base de datos
     private int getFirstTimeRun() {
-        SharedPreferences sp = getSharedPreferences("MYAPP", 0);
+        SharedPreferences sp = getSharedPreferences("defaultSettings", 0);
         int result, currentVersionCode = BuildConfig.VERSION_CODE;
         int lastVersionCode = sp.getInt("FIRSTTIMERUN", -1);
         if (lastVersionCode == -1) result = 0; else
