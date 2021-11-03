@@ -12,7 +12,7 @@
         android:id="@+id/logo_image"
         android:layout_width="166dp"
         android:layout_height="175dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/h"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -64,5 +64,66 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jugar_button" />
+
+    <RadioGroup
+        android:id="@+id/Radio_Group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_text">
+
+        <RadioButton
+            android:id="@+id/radioButton_facil"
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:text="FÁCIL"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_image" />
+
+        <RadioButton
+            android:id="@+id/radioButton_medio"
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:checked="true"
+            android:text="NORMAL"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioButton_facil" />
+
+        <RadioButton
+            android:id="@+id/radioButton_dificil"
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:text="DIFICIL"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioButton_medio" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/name_text"
+        android:layout_width="144dp"
+        android:layout_height="58dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Nombre"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
