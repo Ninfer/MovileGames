@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,21 +19,23 @@ import android.widget.Toast;
 import com.example.quiz_mario_borja.db.DbHelper;
 import com.example.quiz_mario_borja.db.DbQuiz;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     //Variables de layout
-    private Button nextButton, finishButton, exitButton, AButton, BButton, CButton, DButton;
+    private Button exitButton, AButton, BButton, CButton, DButton;
     private TextView numText, questionText, timeText, helpText;
     private Switch helpSwitch;
     //Variables de gestion de preguntas
     private static final long START_TIME_IN_MILLIS = 15000; //15 s
-    private int questionOrder, questionSum, trueButton;
+    private int trueButton, questionOrder;
+    private int questionList [];
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
-    private boolean timerRunning, answerChoosen;
+    private boolean timerRunning;
     //Puntuación del juego
     public int jofrancos = 0;
 
@@ -40,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Recoge variables de Start_Activity
+        int lvl = getIntent().getExtras().getInt("lvl");
+
         //Asignación de los botones a las variables
-        nextButton = findViewById(R.id.next_button);
-        finishButton = findViewById(R.id.finish_button);
         exitButton = findViewById(R.id.exit_button);
         AButton = findViewById(R.id.button_A);
         BButton = findViewById(R.id.button_B);
@@ -61,78 +66,57 @@ public class MainActivity extends AppCompatActivity {
         Intent outIntent = new Intent(MainActivity.this, Start_Activity.class);
         Random rand = new Random();
 
-        // Creación de la Base de Datos
-        DbHelper dbHelper = new DbHelper(MainActivity.this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Comprobación de la creación de la Base de Datos
-        if (db != null){
-            Log.i("DB", "BASE DE DATOS CREADA");
-        } else {
-            Log.w("DB", "ERROR AL CREAR LA BASE DE DATOS");
-        }
-        // Se añaden las preguntas si es la primera vez que se abre la app
-        DbQuiz dbQuiz = new DbQuiz(MainActivity.this);
-        switch(getFirstTimeRun()){
-            case 0: // Caso para la primera vez que abres la app
-                dbQuiz.addQuestions();
-                Log.i("DB", "Preguntas añadidas por primera vez");
-                break;
-            case 1: // Caso para la app ya iniciada
-                Log.i("DB", "Las preguntas ya fueron añadidas");
-                break;
-            case 2: // Caso de actualización de la app
-                dbHelper.onUpgrade(db,1,2);
-                dbQuiz.addQuestions();
-                Log.i("DB", "Lista de Preguntas actualizada");
-                break;
-        }
-
         //Inicio de las preguntas al empezar la actividad. Lógica de la estructura iniciada
-        questionSum = 1;
         helpSwitch.setChecked(false);
         helpText.setVisibility(View.INVISIBLE);
-        answerChoosen = false;
-        timerRunning = false;                            //Inicio de la lógica del timer
-        questionOrder = rand.nextInt(5);          //Numero aleatorio por el que empezarán las preguntas
+        timerRunning = false;                           //Inicio de la lógica del timer
+        questionOrder = 0;
+        questionList = new int[lvl];
         resetButtons();                                 //Se asegura que los botones tienen los colores predeterminados
-        chooseQuestion(questionOrder);                  //Inicio aleatorio del carruesl de preguntas
+        chooseQuestions(lvl);
         startStop();                                    //Inicio del contador de tiempo
 
         //Funcionalidad de los 4 botones de juego, los 4 funcionan igual
         AButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Comprueba si la tecla pulsada es la correcta y si está dentro de tiempo.
+                // Comprueba si la tecla pulsada es la correcta y si está dentro de tiempo.
                 // Si es así, suma los puntos, cambia el color del botón y se asegura de que has elegido una opción
 
                 BButton.setEnabled(false);
                 CButton.setEnabled(false);
                 DButton.setEnabled(false);
 
-                if(trueButton == 1 && !answerChoosen){
+                if(trueButton == 1){
                     AButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
-                    answerChoosen = true;
                 }else{
                     AButton.setBackgroundColor(getResources().getColor(R.color.red));
-                    answerChoosen = true;
                 }
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
-                //nextButton.setEnabled(true);
-                //nextButton.setVisibility(View.VISIBLE);
 
-                //Lógica para resetear las preguntas y cambiar la funcionalidad del botón si
-                // se correspondía con la última pregunta
-                if (questionSum == 5){
-                    //nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                } else {
-                    nextButton.setEnabled(true);
-                    nextButton.setVisibility(View.VISIBLE);
-                }
+                // Feedback para que el usuario sepa que ha acertado
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
+                        if(questionOrder == questionList.length - 1){
+                            intent.putExtra("jofrancos", jofrancos);
+                            startActivity(intent);
+                        } else {
+                            helpSwitch.setChecked(false);
+                            helpText.setVisibility(View.INVISIBLE);
+                            resetButtons();
+                            resetTimer();
+                            startStop();
+                            questionOrder ++;
+                            question();
+                        }
+                    }
+                }, 1000);
             }
         });
         BButton.setOnClickListener(new View.OnClickListener() {
@@ -143,28 +127,36 @@ public class MainActivity extends AppCompatActivity {
                 CButton.setEnabled(false);
                 DButton.setEnabled(false);
 
-                if(trueButton == 2 && !answerChoosen){
+                if(trueButton == 2){
                     BButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
-                    answerChoosen = true;
                 }else{
                     BButton.setBackgroundColor(getResources().getColor(R.color.red));
-                    answerChoosen = true;
                 }
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
-                //nextButton.setEnabled(true);
-                //nextButton.setVisibility(View.VISIBLE);
 
-                if (questionSum == 5){
-                    //nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                } else {
-                    nextButton.setEnabled(true);
-                    nextButton.setVisibility(View.VISIBLE);
-                }
+                // Feedback para que el usuario sepa que ha acertado
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
+                        if(questionOrder == questionList.length - 1){
+                            intent.putExtra("jofrancos", jofrancos);
+                            startActivity(intent);
+                        } else {
+                            helpSwitch.setChecked(false);
+                            helpText.setVisibility(View.INVISIBLE);
+                            resetButtons();
+                            resetTimer();
+                            startStop();
+                            questionOrder ++;
+                            question();
+                        }
+                    }
+                }, 1000);
             }
         });
         CButton.setOnClickListener(new View.OnClickListener() {
@@ -175,28 +167,36 @@ public class MainActivity extends AppCompatActivity {
                 BButton.setEnabled(false);
                 DButton.setEnabled(false);
 
-                if(trueButton == 3 && !answerChoosen){
+                if(trueButton == 3){
                     CButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
-                    answerChoosen = true;
                 }else{
                     CButton.setBackgroundColor(getResources().getColor(R.color.red));
-                    answerChoosen = true;
                 }
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
-                //nextButton.setEnabled(true);
-                //nextButton.setVisibility(View.VISIBLE);
 
-                if (questionSum == 5){
-                    //nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                } else {
-                    nextButton.setEnabled(true);
-                    nextButton.setVisibility(View.VISIBLE);
-                }
+                // Feedback para que el usuario sepa que ha acertado
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
+                        if(questionOrder == questionList.length - 1){
+                            intent.putExtra("jofrancos", jofrancos);
+                            startActivity(intent);
+                        } else {
+                            helpSwitch.setChecked(false);
+                            helpText.setVisibility(View.INVISIBLE);
+                            resetButtons();
+                            resetTimer();
+                            startStop();
+                            questionOrder ++;
+                            question();
+                        }
+                    }
+                }, 1000);
             }
         });
         DButton.setOnClickListener(new View.OnClickListener() {
@@ -207,29 +207,36 @@ public class MainActivity extends AppCompatActivity {
                 BButton.setEnabled(false);
                 CButton.setEnabled(false);
 
-                if(trueButton == 4 && !answerChoosen){
+                if(trueButton == 4){
                     DButton.setBackgroundColor(getResources().getColor(R.color.blue));
                     jofrancos += 3;
-                    answerChoosen = true;
                 }else{
                     DButton.setBackgroundColor(getResources().getColor(R.color.red));
-                    answerChoosen = true;
                 }
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
-                //nextButton.setEnabled(true);
-                //nextButton.setVisibility(View.VISIBLE);
 
-                if (questionSum == 5){
-                    //nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                } else {
-                    nextButton.setEnabled(true);
-                    nextButton.setVisibility(View.VISIBLE);
-                }
-
+                // Feedback para que el usuario sepa que ha acertado
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
+                        if(questionOrder == questionList.length - 1){
+                            intent.putExtra("jofrancos", jofrancos);
+                            startActivity(intent);
+                        } else {
+                            helpSwitch.setChecked(false);
+                            helpText.setVisibility(View.INVISIBLE);
+                            resetButtons();
+                            resetTimer();
+                            startStop();
+                            questionOrder ++;
+                            question();
+                        }
+                    }
+                }, 1000);
             }
         });
 
@@ -243,48 +250,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(outIntent);
             }
         });
-
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(questionOrder >= 4){
-                    questionOrder = 0;
-                }else{
-                    questionOrder++;
-                }
-
-                //Genera la siguiente pregunta, resetea los colores de los botones en default,
-                //resetea el timer y vuelve a empezar tras pulsar.
-                questionSum++;
-                answerChoosen = false;
-                helpSwitch.setChecked(false);
-                helpText.setVisibility(View.INVISIBLE);
-                resetButtons();
-                resetTimer();
-                chooseQuestion(questionOrder);
-                startStop();
-            }
-        });
-        //Botón que aparece al completar las 5 preguntas, sirve para lanzar la actividad de resultados
-        finishButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent.putExtra("jofrancos", jofrancos);
-                startActivity(intent);
-            }
-        });
         updateTimer();
-    }
-
-    // Método que recoge si es la primera vez que se inicia la app para crear la base de datos
-    private int getFirstTimeRun() {
-        SharedPreferences sp = getSharedPreferences("MYAPP", 0);
-        int result, currentVersionCode = BuildConfig.VERSION_CODE;
-        int lastVersionCode = sp.getInt("FIRSTTIMERUN", -1);
-        if (lastVersionCode == -1) result = 0; else
-            result = (lastVersionCode == currentVersionCode) ? 1 : 2;
-        sp.edit().putInt("FIRSTTIMERUN", currentVersionCode).apply();
-        return result;
     }
 
     //Funcionalidad del boton Switch
@@ -298,100 +264,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Carrusel de preguntas definidas a fuego en el código, se establece el texto de la pregunta,
-    // la respuesta de los botones y el banner de número de preguntas. Guarda con un id el botón
-    // que contiene la respuesta correcta asociada con el texto que se le ha asignado.
-    private void chooseQuestion(int num){
-        switch (num){
-            case 0:
-                numText.setText(String.valueOf(questionSum) + "/5");
-                questionText.setText("¿Qué año pisó la luna el ser humano?");
-                helpText.setText("La guerra fría estaba en su apogeo");
-                AButton.setText("1966");
-                trueButton = 1;
-                BButton.setText("1976");
-                CButton.setText("1866");
-                DButton.setText("1956");
+    private void chooseQuestions(int lvl){
+        Random rand = new Random();
+        while(questionOrder < lvl){
+            int aux = rand.nextInt(lvl);
+            boolean val = contains(questionList, questionOrder, aux + 1);
+            if((questionOrder > 0) && (!val))
+            //if((questionOrder > 0) && (aux + 1 != questionList[questionOrder - 1]))
+            {
+                questionList[questionOrder] = aux + 1;
+                questionOrder ++;
+            } else if(questionOrder == 0) {
+                questionList[questionOrder] = aux + 1;
+                questionOrder ++;
+            }
+        }
+        questionOrder = 0;
+        question();
+    }
 
-                /*if(questionSum == 5){
-                    nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                }*/
+    public boolean contains(int[] list, int length, int key) {
+        boolean val = false;
+        for(int i = 0; i < length; i++){
+            if(list[i] == key) val = true;
+        }
+        return val;
+    }
 
-                break;
-            case 1:
-                numText.setText(String.valueOf(questionSum) + "/5");
-                questionText.setText("¿Qué año salio el DLC The Last of Us: Left Behind?");
-                helpText.setText("Salió un año después que el juego original");
-                AButton.setText("2013");
-                BButton.setText("2014");
-                trueButton = 2;
-                CButton.setText("2016");
-                DButton.setText("2017");
+    private void question(){
+        DbHelper dbHelper = new DbHelper(MainActivity.this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor question = null;
 
-                /*if(questionSum == 5){
-                    nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                }*/
+        question = db.rawQuery("SELECT * FROM " + DbHelper.TABLE_QUESTIONS + " WHERE id = " + questionList[questionOrder], null);
 
-                break;
-            case 2:
-                numText.setText(String.valueOf(questionSum) + "/5");
-                questionText.setText("¿Qué año se publicó el juego de ROL de mesa 'Dungeons & Dragons'?");
-                helpText.setText("20 años después de la publicación del libro 'El señor de los anillos'");
-                AButton.setText("1980");
-                BButton.setText("1966");
-                CButton.setText("1974");
-                trueButton = 3;
-                DButton.setText("1983");
-
-                /*if(questionSum == 5){
-                    nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                }*/
-
-                break;
-            case 3:
-                numText.setText(String.valueOf(questionSum) + "/5");
-                questionText.setText("¿Qué año llegó al espacio el primer astronauta Español?");
-                helpText.setText("Tiene trampa");
-                AButton.setText("2001");
-                BButton.setText("1995");
-                CButton.setText("1965");
-                DButton.setText("1973");
-                trueButton = 4;
-
-                /*if(questionSum == 5){
-                    nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                }*/
-
-                break;
-            case 4:
-                numText.setText(String.valueOf(questionSum) + "/5");
-                questionText.setText("¿Que año se publicó el libro 'El Capital' de Karl Marx?");
-                helpText.setText("Fue escrito tras el inicio de la revolución industrial en Europa");
-                AButton.setText("1917");
-                BButton.setText("1867");
-                trueButton = 2;
-                CButton.setText("1887");
-                DButton.setText("1697");
-
-                /*if(questionSum == 5){
-                    nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                }*/
-
-                break;
-            default:
-                break;
+        if(question.moveToFirst()){
+            questionText.setText(question.getString(1).toString());
+            helpText.setText(question.getString(2).toString());
+            AButton.setText(question.getString(3).toString());
+            BButton.setText(question.getString(4).toString());
+            CButton.setText(question.getString(5).toString());
+            DButton.setText(question.getString(6));
+            trueButton = question.getInt(7);
         }
 
+        numText.setText(String.valueOf(questionOrder + 1) + "/" + String.valueOf(questionList.length));
+
+        question.close();
     }
 
     //Método que devuelve los botones a sus colores por defecto al comenzar una nueva pregunta
@@ -404,12 +323,6 @@ public class MainActivity extends AppCompatActivity {
         BButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         CButton.setBackgroundColor(getResources().getColor(R.color.platinum));
         DButton.setBackgroundColor(getResources().getColor(R.color.platinum));
-
-        nextButton.setEnabled(false);
-        nextButton.setVisibility(View.INVISIBLE);
-
-        finishButton.setEnabled(false);
-        finishButton.setVisibility(View.INVISIBLE);
 
         timeText.setText("INICIO");
     }
@@ -435,25 +348,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                //Si se acaba el tiempo, desabilita los puntos asociados a los botones de victoria y
+                // Si se acaba el tiempo, desabilita los puntos asociados a los botones de victoria y
                 // pone visible el botón para pasar de pregunta.
                 timerRunning = false;
-                answerChoosen = true;
-
-                AButton.setEnabled(false);
-                BButton.setEnabled(false);
-                CButton.setEnabled(false);
-                DButton.setEnabled(false);
-
-                if (questionSum == 5){
-                    //nextButton.setEnabled(false);
-                    finishButton.setEnabled(true);
-                    finishButton.setVisibility(View.VISIBLE);
-                } else {
-                    nextButton.setEnabled(true);
-                    nextButton.setVisibility(View.VISIBLE);
-                }
                 timeText.setText("FIN");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                helpSwitch.setChecked(false);
+                helpText.setVisibility(View.INVISIBLE);
+                resetButtons();
+                resetTimer();
+                startStop();
+                questionOrder ++;
+                question();
             }
         }.start();
 
