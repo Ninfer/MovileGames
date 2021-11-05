@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quiz_Mario_Borja">
         <activity
+            android:name=".Options_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Result_Activity"
             android:exported="true" />
         <activity
