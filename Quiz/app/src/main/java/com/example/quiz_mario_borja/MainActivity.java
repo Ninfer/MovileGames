@@ -32,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
     private Switch helpSwitch;
     //Variables de gestion de preguntas
     private static final long START_TIME_IN_MILLIS = 15000; //15 s
-    private int trueButton, questionOrder;
+    private int trueButton, questionOrder, lvl;
     private int questionList [];
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
-    private boolean timerRunning;
+    private boolean timerRunning, sound;
+    private String name;
     //Puntuación del juego
     public int jofrancos = 0;
 
@@ -44,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Recoge variables de Start_Activity
-        int lvl = getIntent().getExtras().getInt("lvl");
 
         //Asignación de los botones a las variables
         exitButton = findViewById(R.id.exit_button);
@@ -66,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Result_Activity.class);
         Intent outIntent = new Intent(MainActivity.this, Start_Activity.class);
         Random rand = new Random();
+
+        cargarPreferencias();
 
         //Inicio de las preguntas al empezar la actividad. Lógica de la estructura iniciada
         helpSwitch.setChecked(false);
@@ -251,11 +251,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Muestra un mensaje de tipo "Toast" con los puntos conseguidos hasta el momento
                 // y sale al menú pricipal.
-                Toast.makeText(MainActivity.this, "¡"+ String.valueOf(jofrancos) + " Jofrancos conseguidos!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "¡"+ String.valueOf(jofrancos) + " Jofrancos conseguidos por " + name +"!", Toast.LENGTH_LONG).show();
                 startActivity(outIntent);
             }
         });
         updateTimer();
+    }
+
+    public void cargarPreferencias(){
+        SharedPreferences sp = getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
+
+        name = sp.getString("name", "Nombre");
+        lvl = sp.getInt("lvl", 10);
+        sound = sp.getBoolean("sound", true);
     }
 
     //Funcionalidad del boton Switch
@@ -269,13 +277,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Elección de las preguntas según el número de preguntas elegidas
     private void chooseQuestions(int lvl){
         Random rand = new Random();
         while(questionOrder < lvl){
             int aux = rand.nextInt(lvl);
             boolean val = contains(questionList, questionOrder, aux + 1);
             if((questionOrder > 0) && (!val))
-            //if((questionOrder > 0) && (aux + 1 != questionList[questionOrder - 1]))
             {
                 questionList[questionOrder] = aux + 1;
                 questionOrder ++;
@@ -313,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             trueButton = question.getInt(7);
         }
 
-        numText.setText(String.valueOf(questionOrder + 1) + "/" + String.valueOf(questionList.length));
+        numText.setText(String.valueOf(questionOrder + 1) + "/" + lvl);
 
         question.close();
     }

@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/name_text2"
+            android:id="@+id/text_name_op"
             android:layout_width="144dp"
             android:layout_height="58dp"
             android:layout_gravity="center"
@@ -59,11 +59,12 @@
             android:textStyle="bold" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/switch_sound"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="32sp"
-            android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:text="Sonido" />
 
         <LinearLayout
@@ -75,7 +76,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView_numPreg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -142,7 +143,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/back_button"
         android:layout_width="124dp"
         android:layout_height="64dp"
         android:layout_marginStart="48dp"
