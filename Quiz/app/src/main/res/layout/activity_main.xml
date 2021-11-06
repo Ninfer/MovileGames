@@ -31,12 +31,22 @@
         <TextView
             android:id="@+id/question_text"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:layout_margin="16dp"
             android:gravity="center"
             android:text="Pregunta"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/play_pause"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/pausa"
+            tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,6 +68,7 @@
             android:text="Tiempo"
             android:textSize="24sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
     <Button
@@ -125,6 +136,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:checked="false"
+        android:minHeight="48dp"
         android:onClick="switchButton"
         android:text="Pista"
         android:textSize="17sp"

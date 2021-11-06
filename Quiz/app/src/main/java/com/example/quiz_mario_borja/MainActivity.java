@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,16 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
     //Variables de layout
     private Button exitButton, AButton, BButton, CButton, DButton;
+    private ImageButton playPause;
     private TextView numText, questionText, timeText, helpText;
     private Switch helpSwitch;
+    private MediaPlayer mediaPlayerMusic, mediaPlayerSounds;
     //Variables de gestion de preguntas
-    private static final long START_TIME_IN_MILLIS = 15000; //15 s
+    private static final long START_TIME_IN_MILLIS = 30000; //15 s
     private int trueButton, questionOrder, lvl;
     private int questionList [];
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
     private boolean timerRunning, sound;
-    private String name;
+    private String name, song;
     //Puntuación del juego
     public int jofrancos = 0;
 
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         BButton = findViewById(R.id.button_B);
         CButton = findViewById(R.id.button_C);
         DButton = findViewById(R.id.button_D);
+        playPause = findViewById(R.id.play_pause);
 
         helpSwitch = findViewById(R.id.help_switch);
 
@@ -107,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
                         // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
                         if(questionOrder == questionList.length - 1){
                             intent.putExtra("jofrancos", jofrancos);
+                            mediaPlayerMusic.release();
+                            finish();
                             startActivity(intent);
                         } else {
                             helpSwitch.setChecked(false);
@@ -148,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
                         // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
                         if(questionOrder == questionList.length - 1){
                             intent.putExtra("jofrancos", jofrancos);
+                            mediaPlayerMusic.release();
+                            finish();
                             startActivity(intent);
                         } else {
                             helpSwitch.setChecked(false);
@@ -189,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
                         // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
                         if(questionOrder == questionList.length - 1){
                             intent.putExtra("jofrancos", jofrancos);
+                            mediaPlayerMusic.release();
+                            finish();
                             startActivity(intent);
                         } else {
                             helpSwitch.setChecked(false);
@@ -230,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
                         // Si es la última pregunta, pasa a la pantalla de resultados, sino, continua
                         if(questionOrder == questionList.length - 1){
                             intent.putExtra("jofrancos", jofrancos);
+                            mediaPlayerMusic.release();
+                            finish();
                             startActivity(intent);
                         } else {
                             helpSwitch.setChecked(false);
@@ -251,8 +265,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Muestra un mensaje de tipo "Toast" con los puntos conseguidos hasta el momento
                 // y sale al menú pricipal.
+
+                mediaPlayerMusic.release();
                 Toast.makeText(MainActivity.this, "¡"+ String.valueOf(jofrancos) + " Jofrancos conseguidos por " + name +"!", Toast.LENGTH_LONG).show();
+                finish();
                 startActivity(outIntent);
+            }
+        });
+        playPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(sound){
+                    if(mediaPlayerMusic.isPlaying()){
+                        mediaPlayerMusic.pause();
+                        playPause.setBackgroundResource(R.drawable.play);
+                    } else {
+                        mediaPlayerMusic.start();
+                        playPause.setBackgroundResource(R.drawable.pausa);
+                    }
+                }
+
             }
         });
         updateTimer();
@@ -307,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
     private void question(){
         DbHelper dbHelper = new DbHelper(MainActivity.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         Cursor question = null;
 
         question = db.rawQuery("SELECT * FROM " + DbHelper.TABLE_QUESTIONS + " WHERE id = " + questionList[questionOrder], null);
@@ -319,10 +352,17 @@ public class MainActivity extends AppCompatActivity {
             CButton.setText(question.getString(5).toString());
             DButton.setText(question.getString(6));
             trueButton = question.getInt(7);
+            //song = "R.raw." + question.getString(8).toString();
         }
 
         numText.setText(String.valueOf(questionOrder + 1) + "/" + lvl);
-
+        if(sound){
+            if (mediaPlayerMusic != null) mediaPlayerMusic.release();
+            //mediaPlayerMusic = MediaPlayer.create(MainActivity.this, 1800010);
+            mediaPlayerMusic = MediaPlayer.create(MainActivity.this, R.raw.internacional);
+            mediaPlayerMusic.setLooping(false);
+            mediaPlayerMusic.start();
+        }
         question.close();
     }
 

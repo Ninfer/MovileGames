@@ -36,13 +36,13 @@ public class Options_Activity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.radioButton_facil){
-                    Toast.makeText(Options_Activity.this, "¡Modo Fácil Activado!",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Options_Activity.this, "¡Modo Fácil Activado!",Toast.LENGTH_LONG).show();
                     lvl = 5;
                 } else if(checkedId == R.id.radioButton_medio){
-                    Toast.makeText(Options_Activity.this, "¡Modo Normal Activado!",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Options_Activity.this, "¡Modo Normal Activado!",Toast.LENGTH_LONG).show();
                     lvl = 10;
                 } else if(checkedId == R.id.radioButton_dificil){
-                    Toast.makeText(Options_Activity.this, "¡Modo Dificil Activado!",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Options_Activity.this, "¡Modo Dificil Activado!",Toast.LENGTH_LONG).show();
                     lvl = 15;
                 }
             }
@@ -85,10 +85,12 @@ public class Options_Activity extends AppCompatActivity {
 
         String name = sp.getString("name", "Anónimo");
         int dificult = sp.getInt("dificult", 2131231156);
+        int lvlAux = sp.getInt("lvl", 10);
         boolean sound = sp.getBoolean("sound", true);
 
         nameText.setText(name);
         radioGruop.check(dificult);
         swichSound.setChecked(sound);
+        lvl = lvlAux;
     }
 }

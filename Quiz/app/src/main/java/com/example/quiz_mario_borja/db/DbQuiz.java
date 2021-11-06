@@ -16,7 +16,7 @@ public class DbQuiz extends DbHelper{
         this.context = context;
     }
 
-    public long insertQuestion(String pregunta, String ayuda, String abutton, String bbutton, String cbutton,String dbutton, int correct){
+    public long insertQuestion(String pregunta, String ayuda, String abutton, String bbutton, String cbutton,String dbutton, int correct, String song){
 
         long id = 0;
 
@@ -32,6 +32,7 @@ public class DbQuiz extends DbHelper{
             values.put("cbutton", cbutton);
             values.put("dbutton", dbutton);
             values.put("correct", correct);
+            values.put("song", song);
 
             id = db.insert(TABLE_QUESTIONS, null, values);
 
@@ -66,7 +67,7 @@ public class DbQuiz extends DbHelper{
 
     // Agrega los datos de las preguntas a la base de datos
     public void addQuestions(){
-        String pregunta, ayuda, abutton, bbutton, cbutton, dbutton;
+        String pregunta, ayuda, abutton, bbutton, cbutton, dbutton, song;
         int correct;
         long id;
 
@@ -78,8 +79,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1866";
         dbutton = "1956";
         correct = 1;
+        song = "eeuu";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -94,8 +96,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1866";
         dbutton = "1966";
         correct = 1;
+        song = "urss";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -110,8 +113,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1928";
         dbutton = "1945";
         correct = 2;
+        song = "internacional";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -126,8 +130,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1922";
         dbutton = "1917";
         correct = 3;
+        song = "urss";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -142,8 +147,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1965";
         dbutton = "1973";
         correct = 4;
+        song = "payaso";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -158,8 +164,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1867";
         dbutton = "1697";
         correct = 2;
+        song = "eeuu";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -174,8 +181,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1875";
         dbutton = "1978";
         correct = 4;
+        song = "espana";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -190,8 +198,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1779";
         dbutton = "1789";
         correct = 3;
+        song = "marsellesa";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -200,21 +209,22 @@ public class DbQuiz extends DbHelper{
 
         //Música -> música árabe
         pregunta = "¿Qué año entraron los Musulmanes en la Península?";
-        ayuda = "Ocurrió en mitad de la guerra fría entre EEUU y la URSS";
+        ayuda = "Abre el libro de Historia de España";
         abutton = "661";
         bbutton = "717";
         cbutton = "745";
         dbutton = "712";
         correct = 4;
+        song = "arabe";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
             Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
         }
 
-        //Música -> música árabe
+        //Música ->
         pregunta = "¿Qué año se descubrió (porque antes no existía) América?";
         ayuda = "Ese mismo año terminó la Reconquista (porque ya se había conquistado antes) con la toma de Granada";
         abutton = "1492";
@@ -222,8 +232,9 @@ public class DbQuiz extends DbHelper{
         cbutton = "1498";
         dbutton = "1959";
         correct = 1;
+        song = "indio";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
@@ -238,13 +249,101 @@ public class DbQuiz extends DbHelper{
         cbutton = "1558";
         dbutton = "1534";
         correct = 4;
+        song = "tercios";
 
-        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct);
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){
             Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
         } else {
             Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
         }
+
+        //Música -> Another brick in the world
+        pregunta = "¿Qué año calló el Muro De Berlín?";
+        ayuda = "Dos años después ocurrió la Disolución de la URSS";
+        abutton = "1989";
+        bbutton = "1945";
+        cbutton = "1917";
+        dbutton = "2000";
+        correct = 1;
+        song = "brick";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música ->
+        pregunta = "¿Qué año comenzó la I Guerra Mundial?";
+        ayuda = "Ocurrió antes que la II Guerra Mundial";
+        abutton = "1918";
+        bbutton = "1945";
+        cbutton = "1914";
+        dbutton = "1903";
+        correct = 3;
+        song = "imundial";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música -> Madre anoche en las trincheras
+        pregunta = "¿Qué año terminó la Guerra Civil Española?";
+        ayuda = "Este mismo año, comenzó la II Guerra Mundial";
+        abutton = "1918";
+        bbutton = "1939";
+        cbutton = "1945";
+        dbutton = "1936";
+        correct = 2;
+        song = "trinchera";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música ->
+        pregunta = "¿Qué año terminó la II Guerra Mundial?";
+        ayuda = "Este mismo año, comenzó la II Guerra Mundial";
+        abutton = "1918";
+        bbutton = "1939";
+        cbutton = "1936";
+        dbutton = "1945";
+        correct = 4;
+        song = "iimundial";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música -> El pueblo unido jamás será vencido
+        pregunta = "¿Qué año murió Salvador Allende, Ex Presidente de Chile?";
+        ayuda = "Ocurrió en un golpe de Estado Dirigido por Pinochet";
+        abutton = "1989";
+        bbutton = "1920";
+        cbutton = "1975";
+        dbutton = "1973";
+        correct = 4;
+        song = "pueblo";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+
 
     }
 }

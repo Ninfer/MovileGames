@@ -112,7 +112,7 @@ public class Start_Activity extends AppCompatActivity {
     public void cargarPreferencias(){
         SharedPreferences sp = getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
 
-        name = sp.getString("name", "Nombre");
+        name = sp.getString("name", "Extraño");
 
         nameText.setText(name);
     }

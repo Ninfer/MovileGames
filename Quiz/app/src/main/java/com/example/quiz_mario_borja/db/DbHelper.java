@@ -28,7 +28,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "bbutton TEXT NOT NULL," +
                 "cbutton TEXT NOT NULL," +
                 "dbutton TEXT NOT NULL," +
-                "correct INTEGER NOT NULL)");
+                "correct INTEGER NOT NULL," +
+                "song TEXT NOT NULL)");
 
         db.execSQL("CREATE TABLE " + TABLE_RESULT + "(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
