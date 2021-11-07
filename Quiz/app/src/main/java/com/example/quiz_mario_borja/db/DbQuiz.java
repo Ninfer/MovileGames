@@ -57,6 +57,7 @@ public class DbQuiz extends DbHelper{
             values.put("puntos", puntos);
 
             id = db.insert(TABLE_RESULT, null, values);
+            Log.i("DB", "JUGADOR " + nombre + " AÑADIDO");
 
         } catch (Exception ex) {
             ex.toString();
@@ -335,6 +336,74 @@ public class DbQuiz extends DbHelper{
         dbutton = "1973";
         correct = 4;
         song = "pueblo";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música -> El pueblo unido jamás será vencido
+        pregunta = "¿Qué año comenzó la guerra entre Palestina e Israel?";
+        ayuda = "Ocurrió tras la II Guerra Mundial";
+        abutton = "1950";
+        bbutton = "1948";
+        cbutton = "1945";
+        dbutton = "1920";
+        correct = 2;
+        song = "palestina";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música -> El pueblo unido jamás será vencido
+        pregunta = "¿Qué año terminó de reconstruirse la 'Gran Muralla China'?";
+        ayuda = "Terminó a mediados de la Edad Moderna";
+        abutton = "1644";
+        bbutton = "1368";
+        cbutton = "206";
+        dbutton = "1492";
+        correct = 1;
+        song = "china";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música -> El pueblo unido jamás será vencido
+        pregunta = "¿Qué año se lanzaron las bombas atómicas a Hiroshima y Nagasaki?";
+        ayuda = "Ocurrió con el fin de la II Guerra Mundial";
+        abutton = "1918";
+        bbutton = "1975";
+        cbutton = "1945";
+        dbutton = "1495";
+        correct = 3;
+        song = "atomica";
+
+        id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
+        if(id > 0){
+            Log.i("DB", "PREGUNTA " + id + " AÑADIDA");
+        } else {
+            Log.w("DB", "ERROR AL AÑADIR PREGUNTA");
+        }
+
+        //Música -> El pueblo unido jamás será vencido
+        pregunta = "¿Qué año los Vikingos cruzaron el Mar del Norte y llegaron a Lindisfarne?";
+        ayuda = "Ocurrió con el fin de la II Guerra Mundial";
+        abutton = "1492";
+        bbutton = "1212";
+        cbutton = "793";
+        dbutton = "712";
+        correct = 3;
+        song = "vikingo";
 
         id = insertQuestion(pregunta,ayuda,abutton,bbutton,cbutton,dbutton,correct,song);
         if(id > 0){

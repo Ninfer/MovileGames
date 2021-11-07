@@ -21,11 +21,14 @@ import com.example.quiz_mario_borja.db.DbHelper;
 import com.example.quiz_mario_borja.db.DbQuiz;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Result_Activity extends AppCompatActivity {
 
     private Button restartButton, exitButton;
     private RecyclerView resultados;
+    private TextView jofrancosText;
     private ArrayList<Object> listaResultados;
 
     @Override
@@ -36,9 +39,11 @@ public class Result_Activity extends AppCompatActivity {
         restartButton = findViewById(R.id.restart_button);
         exitButton = findViewById(R.id.exit_button2);
         resultados = findViewById(R.id.RV_Resultados);
+        jofrancosText = findViewById(R.id.jofrancosText);
         resultados.setLayoutManager(new LinearLayoutManager(Result_Activity.this));
 
-        int result = getIntent().getExtras().getInt("jofrancos");
+        Integer result = getIntent().getExtras().getInt("jofrancos");
+        jofrancosText.setText(result.toString() + " JOFRANCOS");
 
         listaResultados = new ArrayList<>();
 
@@ -97,27 +102,38 @@ public class Result_Activity extends AppCompatActivity {
         String name = sp.getString("name", "Nombre");
 
         int id = 0;
-        boolean flag = false;
+
+        /*
         for(int i = 0; i < listaResultados.size(); i++){
             if((listaResultados.get(i)[0].toString().equals(name)) && ((int) listaResultados.get(i)[1]) <= result){
                 listaResultados.get(i)[0] = name;
                 listaResultados.get(i)[1] = result;
                 flag = true;
-            } else {
+            }
+        }
+        */
 
+        //Ordenar lista por los resultados
+        DbQuiz dbQuiz = new DbQuiz(Result_Activity.this);
+        dbQuiz.insertPlayer(name, result);
 
+        Object aux [] = new Object[2];
+        Object add [] = new Object[2];
+        aux [0] = name;
+        aux [1] = result;
+
+        //introducir el último elemento en la posición correcta
+        int index = 0;
+        boolean flag = true;
+        for(int i = 0; i < listaResultados.size(); i++){
+            add = listaResultados.get(i);
+            if(((Integer)add[1] < (Integer) aux[1]) && flag){
+                index = i;
+                flag = false;
             }
         }
 
-        if(!flag){
-            DbQuiz dbQuiz = new DbQuiz(Result_Activity.this);
-            dbQuiz.insertPlayer(name, result);
-
-            Object aux [] = new Object[2];
-            aux [0] = name;
-            aux [1] = result;
-            listaResultados.add(aux);
-        }
+        listaResultados.add(index, aux);
 
         return listaResultados;
     }

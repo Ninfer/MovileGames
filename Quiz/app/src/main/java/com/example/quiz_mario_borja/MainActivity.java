@@ -1,5 +1,7 @@
 package com.example.quiz_mario_borja;
 
+import static java.lang.Math.round;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import com.example.quiz_mario_borja.db.DbHelper;
 import com.example.quiz_mario_borja.db.DbQuiz;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Switch helpSwitch;
     private MediaPlayer mediaPlayerMusic, mediaPlayerSounds;
     //Variables de gestion de preguntas
-    private static final long START_TIME_IN_MILLIS = 30000; //15 s
+    private static final long START_TIME_IN_MILLIS = 30000; //30 s
     private int trueButton, questionOrder, lvl;
     private int questionList [];
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
@@ -97,10 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if(trueButton == 1){
                     AButton.setBackgroundColor(getResources().getColor(R.color.blue));
-                    jofrancos += 3;
+                    jofrancos += 20;
                 }else{
                     AButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
+                jofrancos += timeInMilliseconds / 1000;
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
@@ -140,10 +144,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if(trueButton == 2){
                     BButton.setBackgroundColor(getResources().getColor(R.color.blue));
-                    jofrancos += 3;
+                    jofrancos += 20;
                 }else{
                     BButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
+                jofrancos += timeInMilliseconds / 1000;
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
@@ -183,10 +188,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if(trueButton == 3){
                     CButton.setBackgroundColor(getResources().getColor(R.color.blue));
-                    jofrancos += 3;
+                    jofrancos += 20;
                 }else{
                     CButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
+                jofrancos += timeInMilliseconds / 1000;
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
@@ -226,10 +232,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if(trueButton == 4){
                     DButton.setBackgroundColor(getResources().getColor(R.color.blue));
-                    jofrancos += 3;
+                    jofrancos += 20;
                 }else{
                     DButton.setBackgroundColor(getResources().getColor(R.color.red));
                 }
+                jofrancos += round(timeInMilliseconds / 1000);
                 stopTimer();
                 timerRunning = false;
                 timeText.setText("FIN");
@@ -313,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
     private void chooseQuestions(int lvl){
         Random rand = new Random();
         while(questionOrder < lvl){
-            int aux = rand.nextInt(lvl);
+            int aux = rand.nextInt(20);
             boolean val = contains(questionList, questionOrder, aux + 1);
             if((questionOrder > 0) && (!val))
             {
@@ -352,14 +359,15 @@ public class MainActivity extends AppCompatActivity {
             CButton.setText(question.getString(5).toString());
             DButton.setText(question.getString(6));
             trueButton = question.getInt(7);
-            //song = "R.raw." + question.getString(8).toString();
+            song = question.getString(8).toString();
         }
 
         numText.setText(String.valueOf(questionOrder + 1) + "/" + lvl);
         if(sound){
             if (mediaPlayerMusic != null) mediaPlayerMusic.release();
             //mediaPlayerMusic = MediaPlayer.create(MainActivity.this, 1800010);
-            mediaPlayerMusic = MediaPlayer.create(MainActivity.this, R.raw.internacional);
+            int id = this.getResources().getIdentifier(song, "raw", this.getPackageName());
+            mediaPlayerMusic = MediaPlayer.create(this, id);
             mediaPlayerMusic.setLooping(false);
             mediaPlayerMusic.start();
         }

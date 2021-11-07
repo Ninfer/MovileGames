@@ -68,7 +68,7 @@ public class Options_Activity extends AppCompatActivity {
 
 
         if(nameText.getText().toString().equals("Anónimo")){
-            Toast.makeText(Options_Activity.this, "Nombre Anónimo de usuario utilizado!",Toast.LENGTH_LONG).show();
+            Toast.makeText(Options_Activity.this, "¡Nombre Anónimo de usuario utilizado!",Toast.LENGTH_LONG).show();
             nameText.setText("R4nD0m_3");
         }
 
