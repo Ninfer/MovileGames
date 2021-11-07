@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="CONFIGURACIÓN"
             android:textColor="@color/platinum"
             android:textSize="48sp" />
@@ -49,7 +49,7 @@
             android:layout_width="144dp"
             android:layout_height="58dp"
             android:layout_gravity="center"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             android:ems="10"
             android:gravity="center"
             android:inputType="textPersonName"
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="32sp"
+            android:layout_marginTop="16sp"
             android:minHeight="48dp"
             android:text="Sonido" />
 

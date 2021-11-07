@@ -23,7 +23,7 @@ import com.example.quiz_mario_borja.db.DbQuiz;
 
 public class Start_Activity extends AppCompatActivity {
 
-    private Button startButton,leaveButton;
+    private Button startButton,leaveButton, optionsButton;
     private TextView nameText;
     private String name;
 
@@ -34,6 +34,7 @@ public class Start_Activity extends AppCompatActivity {
 
         startButton = findViewById(R.id.jugar_button);
         leaveButton = findViewById(R.id.salir_button);
+        optionsButton = findViewById(R.id.opciones_button);
         nameText = findViewById(R.id.name_text);
 
         // Creación de la Base de Datos
@@ -69,8 +70,16 @@ public class Start_Activity extends AppCompatActivity {
         // Empezar a jugar
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(Start_Activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        optionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Start_Activity.this, Options_Activity.class);
                 startActivity(intent);
             }
         });
