@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
     public void cargarPreferencias(){
         SharedPreferences sp = getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
 
-        name = sp.getString("name", "Nombre");
+        name = sp.getString("name", "Extraño");
         lvl = sp.getInt("lvl", 10);
         sound = sp.getBoolean("sound", true);
     }
@@ -418,13 +418,21 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                helpSwitch.setChecked(false);
-                helpText.setVisibility(View.INVISIBLE);
-                resetButtons();
-                resetTimer();
-                startStop();
-                questionOrder ++;
-                question();
+                Intent intent = new Intent(MainActivity.this, Result_Activity.class);
+                if(questionOrder == questionList.length - 1){
+                    intent.putExtra("jofrancos", jofrancos);
+                    mediaPlayerMusic.release();
+                    finish();
+                    startActivity(intent);
+                } else {
+                    helpSwitch.setChecked(false);
+                    helpText.setVisibility(View.INVISIBLE);
+                    resetButtons();
+                    resetTimer();
+                    startStop();
+                    questionOrder ++;
+                    question();
+                }
             }
         }.start();
 

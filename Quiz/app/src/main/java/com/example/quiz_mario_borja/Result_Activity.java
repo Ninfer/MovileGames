@@ -132,8 +132,14 @@ public class Result_Activity extends AppCompatActivity {
                 flag = false;
             }
         }
+        add = listaResultados.get(0);
+        if((index == 0) && ((Integer)add[1] > (Integer) aux[1])){
+            listaResultados.add(aux);
+        } else{
+            listaResultados.add(index, aux);
+        }
 
-        listaResultados.add(index, aux);
+
 
         return listaResultados;
     }
