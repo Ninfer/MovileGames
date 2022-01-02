@@ -121,6 +121,8 @@ public class SpaceShipPlayer extends Sprite {
         }
     }
 
+
+    //Quitar vida y destruir si no le quedan
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
         if (otherObject instanceof Asteroid) {
@@ -132,6 +134,8 @@ public class SpaceShipPlayer extends Sprite {
         }
     }
 
+
+    //Cambiar sprite de nave
     @Override
     public void onDraw(Canvas canvas) {
         long time = System.currentTimeMillis();
