@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Scaffold</string>
+    <string name="title_activity_main">Videojuego matamarcianos</string>
+    <string name="subtitle_activity_main">DADM</string>
+    <string name="hello_world">Hello</string>
+    <string name="pause">Pause game</string>
+    <string name="start">Start game</string>
+    <string name="game_title">¡Matamarcianos!</string>
+    <string name="pause_dialog_title">pause title</string>
+    <string name="pause_dialog_message">pause message</string>
+    <string name="resume">resume</string>
+    <string name="stop">stop</string>
+</resources>
