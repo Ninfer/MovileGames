@@ -14,8 +14,8 @@ import dadm.scaffold.sound.GameEvent;
 
 public class SpaceShipPlayer extends Sprite {
 
-    private static final int INITIAL_BULLET_POOL_AMOUNT = 6;
-    private static final long TIME_BETWEEN_BULLETS = 250;
+    private static final int INITIAL_BULLET_POOL_AMOUNT = 12;
+    private static final long TIME_BETWEEN_BULLETS = 300;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
 
@@ -26,6 +26,8 @@ public class SpaceShipPlayer extends Sprite {
     private int maxX;
     private int maxY;
     private double speedFactor;
+
+    private int lives = 3;
 
 
     public SpaceShipPlayer(GameEngine gameEngine){
@@ -95,9 +97,10 @@ public class SpaceShipPlayer extends Sprite {
                     return;
                 }
                 bullet.init(this, positionX + width / 2, positionY, altMode, false);
+
                 gameEngine.addGameObject(bullet);
                 timeSinceLastFire = 0;
-                gameEngine.onGameEvent(GameEvent.LaserFired);
+                //gameEngine.onGameEvent(GameEvent.LaserFired);
             }
             else {
                 Bullet bullet = getBullet();
@@ -105,15 +108,17 @@ public class SpaceShipPlayer extends Sprite {
                     return;
                 }
                 bullet.init(this, positionX+20 + width / 2, positionY, altMode, false);
-                gameEngine.addGameObject(bullet);
+
                 Bullet bullet2 = getBullet();
                 if (bullet2 == null) {
                     return;
                 }
                 bullet2.init(this, positionX-20 + width / 2, positionY, altMode, true);
+
+                gameEngine.addGameObject(bullet);
                 gameEngine.addGameObject(bullet2);
                 timeSinceLastFire = 0;
-                gameEngine.onGameEvent(GameEvent.LaserFired);
+                //gameEngine.onGameEvent(GameEvent.LaserFired);
             }
         }
         else {
@@ -126,11 +131,20 @@ public class SpaceShipPlayer extends Sprite {
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
         if (otherObject instanceof Asteroid) {
-            gameEngine.removeGameObject(this);
-            //gameEngine.stopGame();
-            Asteroid a = (Asteroid) otherObject;
-            a.removeObject(gameEngine);
-            gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+
+            if (lives > 0){
+                lives -= 1;
+                Asteroid a = (Asteroid) otherObject;
+                a.removeObject(gameEngine);
+                gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+            }
+            else {
+                gameEngine.removeGameObject(this);
+                //gameEngine.stopGame();
+                Asteroid a = (Asteroid) otherObject;
+                a.removeObject(gameEngine);
+                gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+            }
         }
     }
 
