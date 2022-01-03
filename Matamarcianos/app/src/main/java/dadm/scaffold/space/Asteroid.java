@@ -7,6 +7,7 @@ import dadm.scaffold.engine.Sprite;
 import dadm.scaffold.engine.particles.ParticleSystem;
 import dadm.scaffold.engine.particles.ScaleInitializer;
 import dadm.scaffold.engine.particles.ScaleModifier;
+import dadm.scaffold.sound.GameEvent;
 
 public class Asteroid extends Sprite {
     public static final int EXPLOSION_PARTICLES = 15;
@@ -97,7 +98,23 @@ public class Asteroid extends Sprite {
     }
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
+        if (otherObject instanceof Bullet) {
+            gameController.currentScore += 100;
+        }
+        if (otherObject instanceof SpaceShipPlayer){
+            gameEngine.removeGameObject(this);
+            gameController.currentLives -= 1;
+            if (gameController.currentLives >= 0) {
+                gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+            }
+            else {
+                SpaceShipPlayer s = (SpaceShipPlayer) otherObject;
+                gameEngine.removeGameObject(s);
+                gameEngine.onGameEvent(GameEvent.SpaceshipHit);
 
+
+            }
+        }
     }
     public void explode(GameEngine gameEngine) {
         mExplisionParticleSystem.oneShot(gameEngine, positionX + width / 2.0, positionY + height / 2.0, EXPLOSION_PARTICLES);

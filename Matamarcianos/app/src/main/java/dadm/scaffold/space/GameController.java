@@ -11,6 +11,8 @@ import dadm.scaffold.engine.GameObject;
 public class GameController extends GameObject {
 
     private static final int TIME_BETWEEN_ENEMIES = 500;
+    public int currentScore;
+    public int currentLives;
     private long currentMillis;
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
     private int enemiesSpawned;
@@ -26,6 +28,8 @@ public class GameController extends GameObject {
     public void startGame() {
         currentMillis = 0;
         enemiesSpawned = 0;
+        currentScore = 0;
+        currentLives = 3;
     }
 
     @Override
