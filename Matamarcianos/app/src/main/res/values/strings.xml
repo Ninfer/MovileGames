@@ -5,6 +5,7 @@
     <string name="hello_world">Hello</string>
     <string name="pause">Pause game</string>
     <string name="start">Start game</string>
+    <string name="quit">Quit game</string>
     <string name="game_title">¡Matamarcianos!</string>
     <string name="pause_dialog_title">pause title</string>
     <string name="pause_dialog_message">pause message</string>
