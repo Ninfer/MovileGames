@@ -1,12 +1,17 @@
 package dadm.scaffold.space;
 
+import android.app.Activity;
 import android.graphics.Canvas;
+import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameObject;
+import dadm.scaffold.counter.GameFragment;
 
 public class GameController extends GameObject {
 
@@ -16,12 +21,18 @@ public class GameController extends GameObject {
     private long currentMillis;
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
     private int enemiesSpawned;
+    private Activity mainActivity;
 
-    public GameController(GameEngine gameEngine) {
+    public TextView textScore;
+
+    public GameController(GameEngine gameEngine, Activity mainActivity) {
         // We initialize the pool of items now
         for (int i=0; i<10; i++) {
             asteroidPool.add(new Asteroid(this, gameEngine));
         }
+        this.mainActivity = mainActivity;
+
+        textScore = mainActivity.findViewById(R.id.score_text);
     }
 
     @Override
@@ -45,11 +56,17 @@ public class GameController extends GameObject {
             enemiesSpawned++;
             return;
         }
+
     }
 
     @Override
     public void onDraw(Canvas canvas) {
-        // This game object does not draw anything
+        if (currentScore >= 1000){
+            textScore.setText("VICTORIA PARA LA MADRE PATRIA");
+        }
+        else{
+            textScore.setText(String.valueOf(currentScore));
+        }
     }
 
     public void returnToPool(Asteroid asteroid) {

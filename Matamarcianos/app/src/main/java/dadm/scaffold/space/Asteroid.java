@@ -1,5 +1,7 @@
 package dadm.scaffold.space;
 
+import android.view.ViewTreeObserver;
+
 import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
@@ -8,10 +10,12 @@ import dadm.scaffold.engine.particles.ParticleSystem;
 import dadm.scaffold.engine.particles.ScaleInitializer;
 import dadm.scaffold.engine.particles.ScaleModifier;
 import dadm.scaffold.sound.GameEvent;
+import dadm.scaffold.counter.GameFragment;
 
 public class Asteroid extends Sprite {
     public static final int EXPLOSION_PARTICLES = 15;
     private final GameController gameController;
+    private final GameEngine gameEngine;
 
     private double speed;
     private double speedX;
@@ -20,10 +24,13 @@ public class Asteroid extends Sprite {
     private ParticleSystem mTrailParticleSystem;
     private ParticleSystem mExplisionParticleSystem;
 
+    private int score = 3;
+
     public Asteroid(GameController gameController, GameEngine gameEngine) {
         super(gameEngine, R.drawable.a10000);
         this.speed = 200d * pixelFactor/1000d;
         this.gameController = gameController;
+        this.gameEngine = gameEngine;
         mTrailParticleSystem = new ParticleSystem(gameEngine, 50, R.drawable.particle_dust, 600)
                 .addModifier(new ScaleModifier(1, 2, 200, 600))
                 .setFadeOut(200);
@@ -118,5 +125,12 @@ public class Asteroid extends Sprite {
     }
     public void explode(GameEngine gameEngine) {
         mExplisionParticleSystem.oneShot(gameEngine, positionX + width / 2.0, positionY + height / 2.0, EXPLOSION_PARTICLES);
+    }
+
+    public void setScore(int new_score){
+        this.score = new_score;
+    }
+    public int getScore(){
+        return this.score;
     }
 }

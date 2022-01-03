@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.TextView;
 
 import dadm.scaffold.BaseFragment;
 import dadm.scaffold.R;
@@ -21,6 +22,9 @@ import dadm.scaffold.space.SpaceShipPlayer;
 
 
 public class GameFragment extends BaseFragment implements View.OnClickListener {
+
+    public static TextView textScore;
+
     private GameEngine theGameEngine;
 
     public GameFragment() {
@@ -30,6 +34,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game, container, false);
+
+        textScore = rootView.findViewById(R.id.score_text);
+
         return rootView;
     }
 
@@ -50,7 +57,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 theGameEngine.setTheInputController(new JoystickInputController(getView()));
                 theGameEngine.addGameObject(new SpaceShipPlayer(theGameEngine));
                 theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
-                theGameEngine.addGameObject(new GameController(theGameEngine));
+                theGameEngine.addGameObject(new GameController(theGameEngine, getActivity()));
                 theGameEngine.startGame();
             }
         });
@@ -88,6 +95,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         return false;
     }
 
+
+    //Llamar al fragmento de menú de pausa
     private void pauseGameAndShowPauseDialog() {
         theGameEngine.pauseGame();
         new AlertDialog.Builder(getActivity())

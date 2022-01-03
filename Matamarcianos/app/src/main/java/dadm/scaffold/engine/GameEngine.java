@@ -3,11 +3,13 @@ package dadm.scaffold.engine;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import dadm.scaffold.R;
 import dadm.scaffold.input.InputController;
 import dadm.scaffold.sound.GameEvent;
 import dadm.scaffold.sound.SoundManager;
@@ -36,11 +38,16 @@ public class GameEngine {
 
     private Activity mainActivity;
 
+    public TextView textScore;
+
     public GameEngine(Activity activity, GameView gameView) {
         mainActivity = activity;
 
         theGameView = gameView;
         theGameView.setGameObjects(this.gameObjects);
+
+        textScore = mainActivity.findViewById(R.id.score_text);
+        //setTextScore("INICIO");
 
         QuadTree.init();
 
