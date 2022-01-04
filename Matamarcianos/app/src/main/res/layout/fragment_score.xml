@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/yourScoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="240dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="@string/your_score" />
+
+    <TextView
+        android:id="@+id/score_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="180dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="TextView" />
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_play_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:text="Button"
+            tools:text="@string/play_again" />
+
+        <Button
+            android:id="@+id/btn_main_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="Button"
+            tools:text="@string/main_menu" />
+    </LinearLayout>
+
+</FrameLayout>

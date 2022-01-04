@@ -63,6 +63,7 @@ public class GameController extends GameObject {
     public void onDraw(Canvas canvas) {
         if (currentScore >= 1000){
             textScore.setText("VICTORIA PARA LA MADRE PATRIA");
+
         }
         else{
             textScore.setText(String.valueOf(currentScore));

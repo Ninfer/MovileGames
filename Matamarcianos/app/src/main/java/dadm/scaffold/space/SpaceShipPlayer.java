@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dadm.scaffold.R;
+import dadm.scaffold.ScaffoldActivity;
+import dadm.scaffold.counter.GameFragment;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
 import dadm.scaffold.engine.Sprite;
@@ -140,10 +142,11 @@ public class SpaceShipPlayer extends Sprite {
             }
             else {
                 gameEngine.removeGameObject(this);
-                //gameEngine.stopGame();
                 Asteroid a = (Asteroid) otherObject;
                 a.removeObject(gameEngine);
                 gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+                //GameFragment.gameOver();
+
             }
         }
     }

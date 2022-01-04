@@ -114,7 +114,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         theGameEngine.stopGame();
-                        ((ScaffoldActivity)getActivity()).navigateBack();
+                        ((ScaffoldActivity)getActivity()).mainMenu();
                     }
                 })
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -138,5 +138,11 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
             theGameEngine.pauseGame();
             button.setText(R.string.resume);
         }
+    }
+
+    public void gameOver(){
+        theGameEngine.stopGame();
+        ((ScaffoldActivity) getActivity()).scoreMenu();
+        
     }
 }
