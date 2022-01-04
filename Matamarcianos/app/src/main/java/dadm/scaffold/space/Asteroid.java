@@ -1,5 +1,6 @@
 package dadm.scaffold.space;
 
+import android.util.Log;
 import android.view.ViewTreeObserver;
 
 import dadm.scaffold.R;
@@ -24,7 +25,7 @@ public class Asteroid extends Sprite {
     private ParticleSystem mTrailParticleSystem;
     private ParticleSystem mExplisionParticleSystem;
 
-    private int score = 3;
+    private boolean hited = true;
 
     public Asteroid(GameController gameController, GameEngine gameEngine) {
         super(gameEngine, R.drawable.a10000);
@@ -105,32 +106,12 @@ public class Asteroid extends Sprite {
     }
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
-        if (otherObject instanceof Bullet) {
+        if (otherObject instanceof Bullet && hited) {
             gameController.currentScore += 100;
-        }
-        if (otherObject instanceof SpaceShipPlayer){
-            gameEngine.removeGameObject(this);
-            gameController.currentLives -= 1;
-            if (gameController.currentLives >= 0) {
-                gameEngine.onGameEvent(GameEvent.SpaceshipHit);
-            }
-            else {
-                SpaceShipPlayer s = (SpaceShipPlayer) otherObject;
-                gameEngine.removeGameObject(s);
-                gameEngine.onGameEvent(GameEvent.SpaceshipHit);
-
-
-            }
+            hited = false;
         }
     }
     public void explode(GameEngine gameEngine) {
         mExplisionParticleSystem.oneShot(gameEngine, positionX + width / 2.0, positionY + height / 2.0, EXPLOSION_PARTICLES);
-    }
-
-    public void setScore(int new_score){
-        this.score = new_score;
-    }
-    public int getScore(){
-        return this.score;
     }
 }

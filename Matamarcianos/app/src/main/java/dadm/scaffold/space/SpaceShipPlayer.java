@@ -1,6 +1,7 @@
 package dadm.scaffold.space;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class SpaceShipPlayer extends Sprite {
 
     private static final int INITIAL_BULLET_POOL_AMOUNT = 12;
     private static final long TIME_BETWEEN_BULLETS = 300;
+    private static final long INVULNERAVILITY_STEP_TIME = 700;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
 
@@ -29,15 +31,19 @@ public class SpaceShipPlayer extends Sprite {
     private int maxY;
     private double speedFactor;
 
-    private int lives = 3;
+    //Variables añadidas
+    private final GameController gameController;
+    private long invulneravility = INVULNERAVILITY_STEP_TIME;
+    private boolean hited = true;
 
-
-    public SpaceShipPlayer(GameEngine gameEngine){
+    public SpaceShipPlayer(GameEngine gameEngine, GameController gameController){
         super(gameEngine, R.drawable.ship_a);
         nextResourceIntegerId = R.drawable.ship_b;
         speedFactor = pixelFactor * 100d / 1000d; // We want to move at 100px per second on a 400px tall screen
         maxX = gameEngine.width - width;
         maxY = gameEngine.height - height;
+
+        this.gameController = gameController;
 
         initBulletPool(gameEngine);
     }
@@ -71,6 +77,7 @@ public class SpaceShipPlayer extends Sprite {
         // Get the info from the inputController
         updatePosition(elapsedMillis, gameEngine.theInputController);
         checkFiring(elapsedMillis, gameEngine);
+        checkInvulneravility(elapsedMillis);
     }
 
     private void updatePosition(long elapsedMillis, InputController inputController) {
@@ -129,16 +136,19 @@ public class SpaceShipPlayer extends Sprite {
     }
 
 
-    //Quitar vida y destruir si no le quedan
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
-        if (otherObject instanceof Asteroid) {
-
-            if (lives > 0){
-                lives -= 1;
+        if (otherObject instanceof Asteroid && hited){
+            gameController.currentLives -= 1;
+            hited = false;
+            invulneravility = INVULNERAVILITY_STEP_TIME;
+            Log.i("Vidas", String.valueOf(gameController.currentLives));
+            if (gameController.currentLives > 0) {
                 Asteroid a = (Asteroid) otherObject;
                 a.removeObject(gameEngine);
                 gameEngine.onGameEvent(GameEvent.SpaceshipHit);
+                nextResourceIntegerId = R.drawable.ship_inv;
+                super.setBitmap(nextResourceIntegerId);
             }
             else {
                 gameEngine.removeGameObject(this);
@@ -146,8 +156,18 @@ public class SpaceShipPlayer extends Sprite {
                 a.removeObject(gameEngine);
                 gameEngine.onGameEvent(GameEvent.SpaceshipHit);
                 //GameFragment.gameOver();
-
             }
+        }
+    }
+
+    private void checkInvulneravility(long elapsedMillis){
+        if (invulneravility > 0){
+            invulneravility -= elapsedMillis;
+            hited = false;
+        }else{
+            hited = true;
+            nextResourceIntegerId = R.drawable.ship;
+            super.setBitmap(nextResourceIntegerId);
         }
     }
 
@@ -156,6 +176,7 @@ public class SpaceShipPlayer extends Sprite {
     @Override
     public void onDraw(Canvas canvas) {
         long time = System.currentTimeMillis();
+        /*
             if (time > lastFrameChangeTime + frameLengthInMillisecond) {
                 lastFrameChangeTime = time;
                 super.setBitmap(nextResourceIntegerId);
@@ -165,6 +186,7 @@ public class SpaceShipPlayer extends Sprite {
                     nextResourceIntegerId = R.drawable.ship_a;
                 }
             }
+         */
         super.onDraw(canvas);
     }
 

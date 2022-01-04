@@ -14,5 +14,6 @@
     <string name="your_score">Your score is</string>
     <string name="play_again">Play again</string>
     <string name="main_menu">Main menu</string>
+    <string name="hit">hit</string>
     <string name="_0">0</string>
 </resources>

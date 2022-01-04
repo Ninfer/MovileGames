@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,5 +32,50 @@
         android:layout_marginTop="18sp"
         android:textSize="30sp"
         android:text="@string/_0" />
+
+    <ImageView
+        android:id="@+id/img_hit0"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:contentDescription="@string/hit"
+        android:rotation="90"
+        android:src="@drawable/ship" />
+
+    <ImageView
+        android:id="@+id/img_hit1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:contentDescription="@string/hit"
+        android:rotation="90"
+        android:src="@drawable/ship_hit1" />
+
+    <ImageView
+        android:id="@+id/img_hit2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:contentDescription="@string/hit"
+        android:rotation="90"
+        android:src="@drawable/ship_hit2" />
+
+    <ImageView
+        android:id="@+id/img_hit3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:contentDescription="@string/hit"
+        android:rotation="90"
+        android:src="@drawable/ship_hit3" />
+
+    <ImageView
+        android:id="@+id/img_hit4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:contentDescription="@string/hit"
+        android:rotation="90"
+        android:src="@drawable/ship_hit4" />
 
 </FrameLayout>
