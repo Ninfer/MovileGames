@@ -16,4 +16,9 @@
     <string name="main_menu">Main menu</string>
     <string name="hit">hit</string>
     <string name="_0">0</string>
+    <string name="text_your_score">Your score is</string>
+    <string name="text_score_result">0</string>
+    <string name="btn_start_score">Play again</string>
+    <string name="btn_main_menu_score">Main menu</string>
+    <string name="btn_main_menu" />
 </resources>

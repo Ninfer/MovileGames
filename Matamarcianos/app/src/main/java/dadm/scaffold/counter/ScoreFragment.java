@@ -1,5 +1,7 @@
 package dadm.scaffold.counter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,8 @@ import dadm.scaffold.ScaffoldActivity;
 
 public class ScoreFragment extends BaseFragment {
 
-    public static TextView score;
+    public static TextView scoreText, yourScoreText;
+    public int scoreResult;
 
     public ScoreFragment(){
 
@@ -22,8 +25,19 @@ public class ScoreFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_score, container, false);
+        scoreText = rootView.findViewById(R.id.text_score_result);
+        yourScoreText = rootView.findViewById(R.id.text_your_score);
+        yourScoreText.setText("Your score is:");
+        /*
 
-        //score = GameFragment.textScore;
+        SharedPreferences sp = getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
+
+        scoreResult = sp.getString("name", "Extraño");
+
+
+        scoreText.setText(String.valueOf(GameFragment.generalScore));
+
+         */
 
         return rootView;
     }
@@ -31,8 +45,6 @@ public class ScoreFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        score = view.findViewById(R.id.score_text2);
-        score.setText(GameFragment.textScore.getText());
 
         view.findViewById(R.id.btn_play_again).setOnClickListener(new View.OnClickListener() {
             @Override

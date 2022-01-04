@@ -14,12 +14,13 @@ import dadm.scaffold.engine.ScreenGameObject;
 import dadm.scaffold.engine.Sprite;
 import dadm.scaffold.input.InputController;
 import dadm.scaffold.sound.GameEvent;
+import dadm.scaffold.ScaffoldActivity;
 
 public class SpaceShipPlayer extends Sprite {
 
     private static final int INITIAL_BULLET_POOL_AMOUNT = 12;
     private static final long TIME_BETWEEN_BULLETS = 300;
-    private static final long INVULNERAVILITY_STEP_TIME = 700;
+    private static final long INVULNERAVILITY_STEP_TIME = 1000;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
 
@@ -155,7 +156,6 @@ public class SpaceShipPlayer extends Sprite {
                 Asteroid a = (Asteroid) otherObject;
                 a.removeObject(gameEngine);
                 gameEngine.onGameEvent(GameEvent.SpaceshipHit);
-                //GameFragment.gameOver();
             }
         }
     }

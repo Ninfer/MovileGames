@@ -46,7 +46,7 @@ public class GameEngine {
         theGameView = gameView;
         theGameView.setGameObjects(this.gameObjects);
 
-        textScore = mainActivity.findViewById(R.id.score_text);
+        textScore = mainActivity.findViewById(R.id.text_score);
         //setTextScore("INICIO");
 
         QuadTree.init();

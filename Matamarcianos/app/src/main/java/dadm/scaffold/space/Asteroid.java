@@ -25,8 +25,6 @@ public class Asteroid extends Sprite {
     private ParticleSystem mTrailParticleSystem;
     private ParticleSystem mExplisionParticleSystem;
 
-    private boolean hited = true;
-
     public Asteroid(GameController gameController, GameEngine gameEngine) {
         super(gameEngine, R.drawable.a10000);
         this.speed = 200d * pixelFactor/1000d;
@@ -106,9 +104,8 @@ public class Asteroid extends Sprite {
     }
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
-        if (otherObject instanceof Bullet && hited) {
+        if (otherObject instanceof Bullet) {
             gameController.currentScore += 100;
-            hited = false;
         }
     }
     public void explode(GameEngine gameEngine) {

@@ -3,7 +3,6 @@ package dadm.scaffold.space;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dadm.scaffold.R;
+import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.GameObject;
-import dadm.scaffold.counter.GameFragment;
 
 public class GameController extends GameObject {
 
     private static final int TIME_BETWEEN_ENEMIES = 500;
-    private static final int MAX_SCORE = 2000;
+    private static final int MAX_SCORE = 1000;
     public int currentScore;
     public int currentLives;
     private long currentMillis;
@@ -36,7 +35,7 @@ public class GameController extends GameObject {
         }
         this.mainActivity = mainActivity;
 
-        textScore = mainActivity.findViewById(R.id.score_text);
+        textScore = mainActivity.findViewById(R.id.text_score);
 
         hit0 = mainActivity.findViewById(R.id.img_hit0);
         hit1 = mainActivity.findViewById(R.id.img_hit1);
@@ -73,13 +72,24 @@ public class GameController extends GameObject {
             return;
         }
 
+        //Comprueba la condición de victoria y derrota para pasar a la pantalla "Score"
+        if (currentLives <= 0 || currentScore >= MAX_SCORE){
+            //Se ejecuta al instante, se puede meter un tiempo de espera para pasar a la pantalla final
+            gameEngine.pauseGame();
+
+
+
+            ((ScaffoldActivity)mainActivity).scoreMenu();
+        }
+
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         if (currentScore >= MAX_SCORE){
-            textScore.setText("VICTORIA PARA LA MADRE PATRIA");
-
+            textScore.setText("VICTORIA");
+            //Se ejecuta al instante, se puede meter un tiempo de espera para pasar a la pantalla final
+            textScore.setVisibility(View.INVISIBLE);
         }
         else{
             textScore.setText(String.valueOf(currentScore) + "/" + String.valueOf(MAX_SCORE));

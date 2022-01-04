@@ -20,12 +20,13 @@
         android:layout_marginRight="@dimen/activity_vertical_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pause" />
+        android:text="@string/pause"
+        android:layout_marginEnd="@dimen/activity_vertical_margin" />
 
     <include layout="@layout/view_joystick"/>
 
     <TextView
-        android:id="@+id/score_text"
+        android:id="@+id/text_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -40,7 +41,8 @@
         android:layout_marginLeft="50dp"
         android:contentDescription="@string/hit"
         android:rotation="90"
-        android:src="@drawable/ship" />
+        android:src="@drawable/ship"
+        android:layout_marginStart="50dp" />
 
     <ImageView
         android:id="@+id/img_hit1"
@@ -49,7 +51,8 @@
         android:layout_marginLeft="50dp"
         android:contentDescription="@string/hit"
         android:rotation="90"
-        android:src="@drawable/ship_hit1" />
+        android:src="@drawable/ship_hit1"
+        android:layout_marginStart="50dp" />
 
     <ImageView
         android:id="@+id/img_hit2"
@@ -58,7 +61,8 @@
         android:layout_marginLeft="50dp"
         android:contentDescription="@string/hit"
         android:rotation="90"
-        android:src="@drawable/ship_hit2" />
+        android:src="@drawable/ship_hit2"
+        android:layout_marginStart="50dp" />
 
     <ImageView
         android:id="@+id/img_hit3"
@@ -67,7 +71,8 @@
         android:layout_marginLeft="50dp"
         android:contentDescription="@string/hit"
         android:rotation="90"
-        android:src="@drawable/ship_hit3" />
+        android:src="@drawable/ship_hit3"
+        android:layout_marginStart="50dp" />
 
     <ImageView
         android:id="@+id/img_hit4"
@@ -76,6 +81,7 @@
         android:layout_marginLeft="50dp"
         android:contentDescription="@string/hit"
         android:rotation="90"
-        android:src="@drawable/ship_hit4" />
+        android:src="@drawable/ship_hit4"
+        android:layout_marginStart="50dp" />
 
 </FrameLayout>

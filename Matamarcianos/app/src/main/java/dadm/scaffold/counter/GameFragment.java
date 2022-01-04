@@ -23,8 +23,6 @@ import dadm.scaffold.space.SpaceShipPlayer;
 
 public class GameFragment extends BaseFragment implements View.OnClickListener {
 
-    public static TextView textScore;
-
     private GameEngine theGameEngine;
 
     public GameFragment() {
@@ -34,8 +32,6 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game, container, false);
-
-        textScore = rootView.findViewById(R.id.score_text);
 
         return rootView;
     }
@@ -141,11 +137,5 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
             theGameEngine.pauseGame();
             button.setText(R.string.resume);
         }
-    }
-
-    public void gameOver(){
-        theGameEngine.stopGame();
-        ((ScaffoldActivity) getActivity()).scoreMenu();
-        
     }
 }
