@@ -75,7 +75,7 @@ public class GameController extends GameObject {
         //Comprueba la condición de victoria y derrota para pasar a la pantalla "Score"
         if (currentLives <= 0 || currentScore >= MAX_SCORE){
             //Se ejecuta al instante, se puede meter un tiempo de espera para pasar a la pantalla final
-            gameEngine.pauseGame();
+            gameEngine.stopGame();
 
 
 
