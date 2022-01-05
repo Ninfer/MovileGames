@@ -19,7 +19,7 @@ import dadm.scaffold.engine.GameObject;
 public class GameController extends GameObject {
 
     private static final int TIME_BETWEEN_ENEMIES = 500;
-    private static final int MAX_SCORE = 2000;
+    private static final int MAX_SCORE = 10000;
     public int currentScore;
     public int currentLives;
     private long currentMillis;

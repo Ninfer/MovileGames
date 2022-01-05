@@ -19,7 +19,7 @@ import dadm.scaffold.ScaffoldActivity;
 public class SpaceShipPlayer extends Sprite {
 
     private static final int INITIAL_BULLET_POOL_AMOUNT = 12;
-    private static final long TIME_BETWEEN_BULLETS = 300;
+    private static final long TIME_BETWEEN_BULLETS = 450;
     private static final long INVULNERAVILITY_STEP_TIME = 1000;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
@@ -39,7 +39,8 @@ public class SpaceShipPlayer extends Sprite {
 
     public SpaceShipPlayer(GameEngine gameEngine, GameController gameController){
         super(gameEngine, R.drawable.ship_a);
-        nextResourceIntegerId = R.drawable.ship_b;
+        nextResourceIntegerId = R.drawable.ship;
+        super.setBitmap(nextResourceIntegerId);
         speedFactor = pixelFactor * 200d / 1000d; // We want to move at 100px per second on a 400px tall screen
         maxX = gameEngine.width - width;
         maxY = gameEngine.height - height;
@@ -106,7 +107,8 @@ public class SpaceShipPlayer extends Sprite {
                 if (bullet == null) {
                     return;
                 }
-                bullet.init(this, positionX + width / 2, positionY, altMode, false);
+                //bullet.init(this, positionX + width / 2, positionY, altMode, false);
+                bullet.init(this, positionX + width * 2, positionY + height / 2, altMode, false);
 
                 gameEngine.addGameObject(bullet);
                 timeSinceLastFire = 0;

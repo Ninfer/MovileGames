@@ -1,5 +1,7 @@
 package dadm.scaffold.space;
 
+import android.util.Log;
+
 import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
@@ -12,6 +14,9 @@ public class Bullet extends Sprite {
     private boolean altBullet;
     private boolean leftBullet;
 
+    private int maxX;
+    private int maxY;
+
     private SpaceShipPlayer parent;
 
     public Bullet(GameEngine gameEngine){
@@ -20,6 +25,9 @@ public class Bullet extends Sprite {
         altBullet = gameEngine.theInputController.altFireMode;
 
         speedFactor = gameEngine.pixelFactor * -300d / 1000d;
+
+        maxX = gameEngine.width - width;
+        maxY = gameEngine.height - height;
     }
 
     @Override
@@ -28,20 +36,20 @@ public class Bullet extends Sprite {
     @Override
     public void onUpdate(long elapsedMillis, GameEngine gameEngine) {
         if (!altBullet){
-            positionY += speedFactor * elapsedMillis;
-            if (positionY < -height) {
+            positionX -= speedFactor * elapsedMillis;
+            if (positionX > maxX) {
                 gameEngine.removeGameObject(this);
                 // And return it to the pool
                 parent.releaseBullet(this);
             }
         }
         else {
-            positionY += speedFactor * elapsedMillis;
+            positionX -= speedFactor * elapsedMillis;
             if (leftBullet)
-                positionX += speedFactor/2 * elapsedMillis;
+                positionY += speedFactor/2 * elapsedMillis;
             else
-                positionX -= speedFactor/2 * elapsedMillis;
-            if (positionY < -height) {
+                positionY -= speedFactor/2 * elapsedMillis;
+            if (positionX > maxX) {
                 gameEngine.removeGameObject(this);
                 // And return it to the pool
                 parent.releaseBullet(this);

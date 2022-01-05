@@ -22,14 +22,18 @@ public class Asteroid extends Sprite {
     private double speedX;
     private double speedY;
     private double rotationSpeed;
+    private int maxX;
+    private int maxY;
     private ParticleSystem mTrailParticleSystem;
     private ParticleSystem mExplisionParticleSystem;
 
     public Asteroid(GameController gameController, GameEngine gameEngine) {
         super(gameEngine, R.drawable.a10000);
-        this.speed = 200d * pixelFactor/1000d;
+        this.speed = 150d * pixelFactor/1000d;
         this.gameController = gameController;
         this.gameEngine = gameEngine;
+        this.maxX = gameEngine.width - width;
+        this.maxY = gameEngine.height - height;
         mTrailParticleSystem = new ParticleSystem(gameEngine, 50, R.drawable.particle_dust, 600)
                 .addModifier(new ScaleModifier(1, 2, 200, 600))
                 .setFadeOut(200);
@@ -46,10 +50,18 @@ public class Asteroid extends Sprite {
         double angle = gameEngine.random.nextDouble()*Math.PI/3d-Math.PI/6d;
         speedX = speed * Math.sin(angle);
         speedY = speed * Math.cos(angle);
-        // Asteroids initialize in the central 50% of the screen horizontally
-        positionX = gameEngine.random.nextInt(gameEngine.width/2)+gameEngine.width/4.0;
+        /*
+        // Asteroids initialize in the central 50% of the screen vertically
+        positionX = gameEngine.random.nextInt(gameEngine.height/2)+gameEngine.height/4.0;
         // They initialize outside of the screen vertically
-        positionY = -height;
+        positionY = -width;
+        */
+
+        // Asteroids initialize in the central 50% of the screen vertically
+        positionY = gameEngine.random.nextInt(gameEngine.height/2)+gameEngine.height/4.0;
+        // They initialize outside of the screen horizontally
+        positionX = maxX;
+
         rotationSpeed = angle*(180d / Math.PI)/250d; // They rotate 4 times their ange in a second.
         rotation = gameEngine.random.nextInt(360);
         mTrailParticleSystem.clearInitializers()
@@ -75,8 +87,8 @@ public class Asteroid extends Sprite {
 
     @Override
     public void onUpdate(long elapsedMillis, GameEngine gameEngine) {
-        positionX += speedX * elapsedMillis;
-        positionY += speedY * elapsedMillis;
+        positionY += speedX * elapsedMillis;
+        positionX -= speedY * elapsedMillis;
         rotation += rotationSpeed * elapsedMillis;
         if (rotation > 360) {
             rotation = 0;
@@ -86,7 +98,7 @@ public class Asteroid extends Sprite {
         }
         mTrailParticleSystem.setPosition(positionX + width / 2.0, positionY + height / 2.0);
         // Check of the sprite goes out of the screen and return it to the pool if so
-        if (positionY > gameEngine.height) {
+        if (positionX < -gameEngine.height) {
             // Return to the pool
             gameEngine.removeGameObject(this);
             gameController.returnToPool(this);
