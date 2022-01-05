@@ -1,6 +1,8 @@
 package dadm.scaffold.space;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +19,7 @@ import dadm.scaffold.engine.GameObject;
 public class GameController extends GameObject {
 
     private static final int TIME_BETWEEN_ENEMIES = 500;
-    private static final int MAX_SCORE = 1000;
+    private static final int MAX_SCORE = 2000;
     public int currentScore;
     public int currentLives;
     private long currentMillis;
@@ -77,7 +79,11 @@ public class GameController extends GameObject {
             //Se ejecuta al instante, se puede meter un tiempo de espera para pasar a la pantalla final
             gameEngine.stopGame();
 
-
+            Context context = mainActivity.getApplicationContext();
+            SharedPreferences sp = context.getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("score", currentScore);
+            editor.commit();
 
             ((ScaffoldActivity)mainActivity).scoreMenu();
         }

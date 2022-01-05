@@ -1,10 +1,14 @@
 package dadm.scaffold;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import java.util.prefs.Preferences;
 
 import dadm.scaffold.counter.GameFragment;
 import dadm.scaffold.counter.MainMenuFragment;
@@ -28,6 +32,7 @@ public class ScaffoldActivity extends AppCompatActivity {
         }
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         soundManager = new SoundManager(getApplicationContext());
+        SharedPreferences sp = getSharedPreferences("defaultSettings", 0);
     }
 
     public SoundManager getSoundManager() {

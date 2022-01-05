@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-
+    android:layout_gravity="center">
     <TextView
         android:id="@+id/text_your_score"
         android:layout_width="wrap_content"
@@ -15,17 +14,23 @@
         android:textSize="20sp"
         android:textStyle="bold"
         tools:text="@string/your_score" />
-
     <TextView
         android:id="@+id/text_score_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="90dp"
+        android:text="@string/text_score_result"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:text="@string/text_score_result" />
-
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/btn_play_again"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:text="@string/btn_start_score"
+        tools:text="@string/play_again" />
     <Button
         android:id="@+id/btn_main_menu"
         android:layout_width="120dp"
@@ -35,13 +40,5 @@
         android:text="@string/btn_main_menu"
         tools:text="@string/main_menu" />
 
-    <Button
-        android:id="@+id/btn_play_again"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:text="@string/btn_start_score"
-        tools:text="@string/play_again" />
 
 </FrameLayout>

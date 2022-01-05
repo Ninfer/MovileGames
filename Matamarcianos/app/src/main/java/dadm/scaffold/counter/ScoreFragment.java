@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import dadm.scaffold.BaseFragment;
@@ -15,6 +16,7 @@ import dadm.scaffold.ScaffoldActivity;
 public class ScoreFragment extends BaseFragment {
 
     public static TextView scoreText, yourScoreText;
+    public static Button mainMenu, playAgain;
     public int scoreResult;
 
     public ScoreFragment(){
@@ -25,19 +27,20 @@ public class ScoreFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_score, container, false);
+
+        mainMenu = rootView.findViewById(R.id.btn_main_menu);
+        mainMenu.setText("MAIN MENU");
+
         scoreText = rootView.findViewById(R.id.text_score_result);
         yourScoreText = rootView.findViewById(R.id.text_your_score);
         yourScoreText.setText("Your score is:");
-        /*
 
-        SharedPreferences sp = getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
+        SharedPreferences sp = getContext().getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
+        scoreResult = sp.getInt("score", 0);
 
-        scoreResult = sp.getString("name", "Extraño");
+        scoreText.setText(String.valueOf(scoreResult));
 
 
-        scoreText.setText(String.valueOf(GameFragment.generalScore));
-
-         */
 
         return rootView;
     }
