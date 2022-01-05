@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -61,5 +63,10 @@ public class ScoreFragment extends BaseFragment {
                 ((ScaffoldActivity) getActivity()).mainMenu();
             }
         });
+
+        Animation pulseAnimation = AnimationUtils.loadAnimation(getActivity(),
+                R.anim.button_pulse);
+        view.findViewById(R.id.btn_play_again).startAnimation(pulseAnimation);
+        view.findViewById(R.id.btn_main_menu).startAnimation(pulseAnimation);
     }
 }
