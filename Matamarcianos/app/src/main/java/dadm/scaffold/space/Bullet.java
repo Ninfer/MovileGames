@@ -76,11 +76,10 @@ public class Bullet extends Sprite {
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
         if (otherObject instanceof Asteroid) {
             // Remove both from the game (and return them to their pools)
-
             removeObject(gameEngine);
             Asteroid a = (Asteroid) otherObject;
             a.removeObject(gameEngine);
-            a.explode(gameEngine);
+            //a.explode(gameEngine);
             gameEngine.onGameEvent(GameEvent.AsteroidHit);
             // Add some score
         }

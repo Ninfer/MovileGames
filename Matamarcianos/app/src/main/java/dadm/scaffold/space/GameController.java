@@ -18,7 +18,7 @@ import dadm.scaffold.engine.GameObject;
 
 public class GameController extends GameObject {
 
-    private static final int TIME_BETWEEN_ENEMIES = 500;
+    private static final int TIME_BETWEEN_ENEMIES = 400;
     private static final int MAX_SCORE = 10000;
     public int currentScore;
     public int currentLives;
@@ -32,7 +32,7 @@ public class GameController extends GameObject {
 
     public GameController(GameEngine gameEngine, Activity mainActivity) {
         // We initialize the pool of items now
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<100; i++) {
             asteroidPool.add(new Asteroid(this, gameEngine));
         }
         this.mainActivity = mainActivity;

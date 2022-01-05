@@ -52,6 +52,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 theGameEngine.setSoundManager(getScaffoldActivity().getSoundManager());
                 theGameEngine.setTheInputController(new JoystickInputController(getView()));
 
+                //El gameController se crea antes que la nave y, por tanto, los asteroides, cambiar si se puede
                 GameController gameController = new GameController(theGameEngine, getActivity());
 
                 theGameEngine.addGameObject(new SpaceShipPlayer(theGameEngine, gameController));

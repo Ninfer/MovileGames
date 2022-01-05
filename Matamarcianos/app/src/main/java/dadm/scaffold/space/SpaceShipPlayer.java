@@ -18,9 +18,9 @@ import dadm.scaffold.ScaffoldActivity;
 
 public class SpaceShipPlayer extends Sprite {
 
-    private static final int INITIAL_BULLET_POOL_AMOUNT = 12;
+    private static final int INITIAL_BULLET_POOL_AMOUNT = 100;
     private static final long TIME_BETWEEN_BULLETS = 450;
-    private static final long INVULNERAVILITY_STEP_TIME = 1000;
+    private static final long INVULNERAVILITY_TIME_STEP = 1000;
     List<Bullet> bullets = new ArrayList<Bullet>();
     private long timeSinceLastFire;
 
@@ -34,7 +34,7 @@ public class SpaceShipPlayer extends Sprite {
 
     //Variables añadidas
     private final GameController gameController;
-    private long invulneravility = INVULNERAVILITY_STEP_TIME;
+    private long invulneravility = INVULNERAVILITY_TIME_STEP;
     private boolean hited = true;
 
     public SpaceShipPlayer(GameEngine gameEngine, GameController gameController){
@@ -108,7 +108,7 @@ public class SpaceShipPlayer extends Sprite {
                     return;
                 }
                 //bullet.init(this, positionX + width / 2, positionY, altMode, false);
-                bullet.init(this, positionX + width * 2, positionY + height / 2, altMode, false);
+                bullet.init(this, positionX + height, positionY + height / 2, altMode, false);
 
                 gameEngine.addGameObject(bullet);
                 timeSinceLastFire = 0;
@@ -119,13 +119,13 @@ public class SpaceShipPlayer extends Sprite {
                 if (bullet == null) {
                     return;
                 }
-                bullet.init(this, positionX+20 + width / 2, positionY, altMode, false);
+                bullet.init(this, positionX+20 + width, positionY + height / 2, altMode, false);
 
                 Bullet bullet2 = getBullet();
                 if (bullet2 == null) {
                     return;
                 }
-                bullet2.init(this, positionX-20 + width / 2, positionY, altMode, true);
+                bullet2.init(this, positionX-20 + width, positionY + height / 2, altMode, true);
 
                 gameEngine.addGameObject(bullet);
                 gameEngine.addGameObject(bullet2);
@@ -144,7 +144,7 @@ public class SpaceShipPlayer extends Sprite {
         if (otherObject instanceof Asteroid && hited){
             gameController.currentLives -= 1;
             hited = false;
-            invulneravility = INVULNERAVILITY_STEP_TIME;
+            invulneravility = INVULNERAVILITY_TIME_STEP;
             Log.i("Vidas", String.valueOf(gameController.currentLives));
             if (gameController.currentLives > 0) {
                 Asteroid a = (Asteroid) otherObject;
@@ -173,8 +173,6 @@ public class SpaceShipPlayer extends Sprite {
         }
     }
 
-
-    //Cambiar sprite de nave
     @Override
     public void onDraw(Canvas canvas) {
         long time = System.currentTimeMillis();
