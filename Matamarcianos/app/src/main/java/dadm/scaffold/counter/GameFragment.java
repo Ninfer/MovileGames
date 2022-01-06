@@ -3,6 +3,7 @@ package dadm.scaffold.counter;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_play_pause) {
-            pauseGameAndShowPauseDialog();
+            //pauseGameAndShowPauseDialog();
+            playOrPause();
         }
     }
 
@@ -99,6 +101,9 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     //Llamar al fragmento de menú de pausa
     private void pauseGameAndShowPauseDialog() {
         theGameEngine.pauseGame();
+        ((ScaffoldActivity) getActivity()).gameMenu(theGameEngine);
+
+        /*
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.pause_dialog_title)
                 .setMessage(R.string.pause_dialog_message)
@@ -125,7 +130,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 })
                 .create()
                 .show();
-
+         */
     }
 
     private void playOrPause() {
@@ -133,10 +138,12 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         if (theGameEngine.isPaused()) {
             theGameEngine.resumeGame();
             button.setText(R.string.pause);
+            Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
+            getFragmentManager().beginTransaction().remove(frag).commit();
         }
         else {
-            theGameEngine.pauseGame();
             button.setText(R.string.resume);
+            pauseGameAndShowPauseDialog();
         }
     }
 }

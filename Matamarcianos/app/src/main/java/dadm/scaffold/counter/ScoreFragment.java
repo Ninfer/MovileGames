@@ -3,6 +3,7 @@ package dadm.scaffold.counter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,12 +56,16 @@ public class ScoreFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 ((ScaffoldActivity) getActivity()).startGame();
+                Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
+                getFragmentManager().beginTransaction().remove(frag).commit();
             }
         });
         view.findViewById(R.id.btn_main_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((ScaffoldActivity) getActivity()).mainMenu();
+                Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
+                getFragmentManager().beginTransaction().remove(frag).commit();
             }
         });
 

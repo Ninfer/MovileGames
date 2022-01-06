@@ -3,53 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@color/colorAccent">
+    tools:context=".GameMenuFragment"
+    android:background="@color/colorPrimaryDark">
 
     <TextView
-        android:id="@+id/text_your_score"
+        android:id="@+id/pauseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="100dp"
-        android:layout_marginBottom="40dp"
-        android:text="@string/text_your_score"
+        android:text="@string/pause"
         android:textColor="#212121"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:text="@string/your_score" />
-
-    <TextView
-        android:id="@+id/text_score_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginRight="100dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/text_score_result"
-        android:textColor="#212121"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        tools:text="@string/pause"/>
 
     <Button
-        android:id="@+id/btn_play_again"
+        android:id="@+id/btn_resume"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="100dp"
         android:layout_marginBottom="40dp"
-        android:text="@string/play_again"
-        tools:text="@string/play_again" />
+        android:text="@string/resume"
+        tools:text="@string/resume" />
 
     <Button
-        android:id="@+id/btn_main_menu"
+        android:id="@+id/btn_stop"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="40dp"
-        android:text="@string/main_menu"
-        tools:text="@string/main_menu" />
-
+        android:text="@string/stop"
+        tools:text="@string/stop" />
 
 </FrameLayout>

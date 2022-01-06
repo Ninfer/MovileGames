@@ -13,11 +13,14 @@ import java.util.prefs.Preferences;
 import dadm.scaffold.counter.GameFragment;
 import dadm.scaffold.counter.MainMenuFragment;
 import dadm.scaffold.counter.ScoreFragment;
+import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.sound.SoundManager;
 
 public class ScaffoldActivity extends AppCompatActivity {
 
     private static final String TAG_FRAGMENT = "content";
+
+    private GameEngine gameEngine;
 
     private SoundManager soundManager;
 
@@ -49,13 +52,25 @@ public class ScaffoldActivity extends AppCompatActivity {
     }
 
     public void scoreMenu(){
-        navigateToFragment( new ScoreFragment());
+        navigateToFragmentMenu( new ScoreFragment());
+    }
+    public void gameMenu(GameEngine gameEngine){
+        setGameEngine(gameEngine);
+        navigateToFragmentMenu( new GameMenuFragment());
     }
 
     private void navigateToFragment(BaseFragment dst) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container, dst, TAG_FRAGMENT)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void navigateToFragmentMenu(BaseFragment dst) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.menu_layout, dst, TAG_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -93,5 +108,12 @@ public class ScaffoldActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             }
         }
+    }
+
+    public void setGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+    }
+    public GameEngine getGameEngine(){
+        return this.gameEngine;
     }
 }
