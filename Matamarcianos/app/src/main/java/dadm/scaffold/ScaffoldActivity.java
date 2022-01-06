@@ -70,6 +70,7 @@ public class ScaffoldActivity extends AppCompatActivity {
     private void navigateToFragmentMenu(BaseFragment dst) {
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.menu_enter, R.anim.menu_exit, R.anim.menu_enter, R.anim.menu_exit)
                 .replace(R.id.menu_layout, dst, TAG_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
