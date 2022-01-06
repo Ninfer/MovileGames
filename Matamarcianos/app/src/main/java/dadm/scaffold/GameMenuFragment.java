@@ -60,11 +60,21 @@ public class GameMenuFragment extends BaseFragment {
             }
         });
 
+
         /*
         Animation pulseAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.button_pulse);
         view.findViewById(R.id.btn_stop).startAnimation(pulseAnimation);
         view.findViewById(R.id.btn_resume).startAnimation(pulseAnimation);
         */
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        theGameEngine.resumeGame();
+
+        Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
+        getFragmentManager().beginTransaction().remove(frag).commit();
+        return true;
     }
 }

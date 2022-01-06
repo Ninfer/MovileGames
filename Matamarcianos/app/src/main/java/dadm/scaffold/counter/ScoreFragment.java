@@ -74,4 +74,11 @@ public class ScoreFragment extends BaseFragment {
         view.findViewById(R.id.btn_play_again).startAnimation(pulseAnimation);
         view.findViewById(R.id.btn_main_menu).startAnimation(pulseAnimation);
     }
+
+    public boolean onBackPressed() {
+        ((ScaffoldActivity) getActivity()).mainMenu();
+        Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
+        getFragmentManager().beginTransaction().remove(frag).commit();
+        return true;
+    }
 }
