@@ -1,6 +1,5 @@
 package dadm.scaffold;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.os.Build;
@@ -8,19 +7,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.prefs.Preferences;
-
-import dadm.scaffold.counter.GameFragment;
+import dadm.scaffold.counter.GameMenuFragment;
 import dadm.scaffold.counter.MainMenuFragment;
 import dadm.scaffold.counter.ScoreFragment;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.sound.SoundManager;
+import dadm.scaffold.space.GameController;
 
 public class ScaffoldActivity extends AppCompatActivity {
 
     private static final String TAG_FRAGMENT = "content";
 
     private GameEngine gameEngine;
+    private GameController gameController;
 
     private SoundManager soundManager;
 
@@ -54,8 +53,9 @@ public class ScaffoldActivity extends AppCompatActivity {
     public void scoreMenu(){
         navigateToFragmentMenu( new ScoreFragment());
     }
-    public void gameMenu(GameEngine gameEngine){
+    public void gameMenu(GameEngine gameEngine, GameController gameController){
         setGameEngine(gameEngine);
+        setGameController(gameController);
         navigateToFragmentMenu( new GameMenuFragment());
     }
 
@@ -115,5 +115,11 @@ public class ScaffoldActivity extends AppCompatActivity {
     }
     public GameEngine getGameEngine(){
         return this.gameEngine;
+    }
+    public void setGameController(GameController gameController){
+        this.gameController = gameController;
+    }
+    public GameController getGameController(){
+        return this.gameController;
     }
 }

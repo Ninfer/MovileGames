@@ -7,14 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dadm.scaffold.R;
-import dadm.scaffold.ScaffoldActivity;
-import dadm.scaffold.counter.GameFragment;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
 import dadm.scaffold.engine.Sprite;
 import dadm.scaffold.input.InputController;
 import dadm.scaffold.sound.GameEvent;
-import dadm.scaffold.ScaffoldActivity;
 
 public class SpaceShipPlayer extends Sprite {
 

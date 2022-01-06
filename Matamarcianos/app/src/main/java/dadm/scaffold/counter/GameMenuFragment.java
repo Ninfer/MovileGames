@@ -1,4 +1,4 @@
-package dadm.scaffold;
+package dadm.scaffold.counter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +13,16 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
+import dadm.scaffold.BaseFragment;
+import dadm.scaffold.R;
+import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.engine.GameEngine;
+import dadm.scaffold.space.GameController;
 
 public class GameMenuFragment extends BaseFragment {
 
     public GameEngine theGameEngine;
+    public GameController theGameController;
 
     public static TextView pauseText;
     public static Button pause, resume;
@@ -32,6 +37,7 @@ public class GameMenuFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_game_menu, container, false);
 
         theGameEngine = ((ScaffoldActivity) getActivity()).getGameEngine();
+        theGameController = ((ScaffoldActivity) getActivity()).getGameController();
 
         return rootView;
     }
@@ -44,6 +50,7 @@ public class GameMenuFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 theGameEngine.resumeGame();
+                theGameController.startStop();
 
                 Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
                 getFragmentManager().beginTransaction().remove(frag).commit();
@@ -59,8 +66,6 @@ public class GameMenuFragment extends BaseFragment {
                 getFragmentManager().beginTransaction().remove(frag).commit();
             }
         });
-
-
         /*
         Animation pulseAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.button_pulse);
@@ -72,6 +77,7 @@ public class GameMenuFragment extends BaseFragment {
     @Override
     public boolean onBackPressed() {
         theGameEngine.resumeGame();
+        theGameController.startStop();
 
         Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
         getFragmentManager().beginTransaction().remove(frag).commit();

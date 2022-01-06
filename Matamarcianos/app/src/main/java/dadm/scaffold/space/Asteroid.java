@@ -1,8 +1,5 @@
 package dadm.scaffold.space;
 
-import android.util.Log;
-import android.view.ViewTreeObserver;
-
 import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
@@ -10,8 +7,6 @@ import dadm.scaffold.engine.Sprite;
 import dadm.scaffold.engine.particles.ParticleSystem;
 import dadm.scaffold.engine.particles.ScaleInitializer;
 import dadm.scaffold.engine.particles.ScaleModifier;
-import dadm.scaffold.sound.GameEvent;
-import dadm.scaffold.counter.GameFragment;
 
 public class Asteroid extends Sprite {
     public static final int EXPLOSION_PARTICLES = 15;

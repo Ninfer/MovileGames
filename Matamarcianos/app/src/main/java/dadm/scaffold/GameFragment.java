@@ -1,4 +1,4 @@
-package dadm.scaffold.counter;
+package dadm.scaffold;
 
 import android.content.DialogInterface;
 import android.app.AlertDialog;
@@ -25,6 +25,7 @@ import dadm.scaffold.space.SpaceShipPlayer;
 public class GameFragment extends BaseFragment implements View.OnClickListener {
 
     private GameEngine theGameEngine;
+    public GameController theGameController;
 
     public GameFragment() {
     }
@@ -53,12 +54,12 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
                 theGameEngine.setSoundManager(getScaffoldActivity().getSoundManager());
                 theGameEngine.setTheInputController(new JoystickInputController(getView()));
 
-                //El gameController se crea antes que la nave y, por tanto, los asteroides, cambiar si se puede
-                GameController gameController = new GameController(theGameEngine, getActivity());
+                //El gameController se crea antes que la nave y, por tanto, los asteroides. Cambiar si se puede.
+                theGameController = new GameController(theGameEngine, getActivity());
 
-                theGameEngine.addGameObject(new SpaceShipPlayer(theGameEngine, gameController));
+                theGameEngine.addGameObject(new SpaceShipPlayer(theGameEngine, theGameController));
                 theGameEngine.addGameObject(new FramesPerSecondCounter(theGameEngine));
-                theGameEngine.addGameObject(gameController);
+                theGameEngine.addGameObject(theGameController);
                 theGameEngine.startGame();
             }
         });
@@ -101,7 +102,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     //Llamar al fragmento de menú de pausa
     private void pauseGameAndShowPauseDialog() {
         theGameEngine.pauseGame();
-        ((ScaffoldActivity) getActivity()).gameMenu(theGameEngine);
+        theGameController.startStop();
+        ((ScaffoldActivity) getActivity()).gameMenu(theGameEngine, theGameController);
 
         /*
         new AlertDialog.Builder(getActivity())
@@ -137,6 +139,7 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
         Button button = (Button) getView().findViewById(R.id.btn_play_pause);
         if (theGameEngine.isPaused()) {
             theGameEngine.resumeGame();
+            theGameController.startStop();
             button.setText(R.string.pause);
             Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
             getFragmentManager().beginTransaction().remove(frag).commit();
