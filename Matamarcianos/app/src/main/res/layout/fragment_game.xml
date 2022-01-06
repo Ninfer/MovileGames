@@ -26,13 +26,34 @@
     <include layout="@layout/view_joystick"/>
 
     <TextView
-        android:id="@+id/text_score"
+        android:id="@+id/text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="18sp"
         android:textSize="30sp"
         android:text="@string/_0" />
+
+    <TextView
+        android:id="@+id/text_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="21sp"
+        android:layout_marginRight="200sp"
+        android:textSize="26sp"
+        android:text="@string/_0"
+        android:layout_marginEnd="200sp" />
+    <TextView
+        android:id="@+id/text_x2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="21sp"
+        android:layout_marginRight="140sp"
+        android:textSize="26sp"
+        android:text="@string/x2"
+        android:layout_marginEnd="140sp" />
 
     <ImageView
         android:id="@+id/img_hit0"
@@ -88,5 +109,7 @@
         android:contentDescription="@string/hit"
         android:rotation="0"
         android:src="@drawable/ship_hit4" />
+
+
 
 </FrameLayout>

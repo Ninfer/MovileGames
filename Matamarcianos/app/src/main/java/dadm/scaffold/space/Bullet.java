@@ -21,6 +21,7 @@ public class Bullet extends Sprite {
 
     public Bullet(GameEngine gameEngine){
         super(gameEngine, R.drawable.bullet);
+        //super.setBitmap(R.drawable.bullet);
 
         altBullet = gameEngine.theInputController.altFireMode;
 

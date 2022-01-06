@@ -14,8 +14,8 @@
         android:id="@+id/menu_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginLeft="150dp"
         android:layout_marginRight="150dp"></FrameLayout>
 </FrameLayout>

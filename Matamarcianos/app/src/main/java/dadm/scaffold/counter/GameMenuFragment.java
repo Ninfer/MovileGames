@@ -53,11 +53,8 @@ public class GameMenuFragment extends BaseFragment {
                 theGameEngine.resumeGame();
                 theGameController.startStop();
 
-                /*
                 Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
                 getFragmentManager().beginTransaction().remove(frag).commit();
-
-                 */
             }
         });
         view.findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener() {
@@ -66,11 +63,11 @@ public class GameMenuFragment extends BaseFragment {
                 theGameEngine.stopGame();
                 ((ScaffoldActivity)getActivity()).mainMenu();
 
-                /*
+
                 Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
                 getFragmentManager().beginTransaction().remove(frag).commit();
 
-                 */
+
             }
         });
         /*
@@ -86,11 +83,9 @@ public class GameMenuFragment extends BaseFragment {
         theGameEngine.resumeGame();
         theGameController.startStop();
 
-        /*
         Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
         getFragmentManager().beginTransaction().remove(frag).commit();
 
-         */
         return true;
     }
 }

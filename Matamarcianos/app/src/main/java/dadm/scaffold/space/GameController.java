@@ -2,7 +2,6 @@ package dadm.scaffold.space;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.CountDownTimer;
@@ -21,11 +20,12 @@ import dadm.scaffold.engine.GameObject;
 
 public class GameController extends GameObject {
 
-    private static final int TIME_BETWEEN_ENEMIES = 400;
+    private static final int TIME_BETWEEN_ENEMIES = 150;
     private static final int MAX_SCORE = 10000;
-    private static final long START_TIME_IN_MILLIS = 10000; //10 s
+    private static final long START_TIME_IN_MILLIS = 90000; //2m 30s (1000 = 1s)
     public int currentScore;
     public int currentLives;
+    public int enemiesKilled, lastLive, countEnemies;
     private long currentMillis;
     private List<Asteroid> asteroidPool = new ArrayList<Asteroid>();
     private int enemiesSpawned;
@@ -37,18 +37,22 @@ public class GameController extends GameObject {
     private CountDownTimer countDownTimer;
     private boolean timerRunning, timerFinish;
 
-    public TextView textScore;
+    public TextView textTime, textScore, textX2;
     public ImageView hit0, hit1, hit2, hit3, hit4;
 
     public GameController(GameEngine gameEngine, Activity mainActivity) {
         // We initialize the pool of items now
-        for (int i=0; i<100; i++) {
+        for (int i=0; i<300; i++) {
             asteroidPool.add(new Asteroid(this, gameEngine));
         }
         this.mainActivity = mainActivity;
         this.theGameEngine = gameEngine;
 
+        textTime = mainActivity.findViewById(R.id.text_time);
         textScore = mainActivity.findViewById(R.id.text_score);
+        textX2 = mainActivity.findViewById(R.id.text_x2);
+
+        //textX2.setVisibility(View.INVISIBLE);
 
         hit0 = mainActivity.findViewById(R.id.img_hit0);
         hit1 = mainActivity.findViewById(R.id.img_hit1);
@@ -67,8 +71,11 @@ public class GameController extends GameObject {
     public void startGame() {
         currentMillis = 0;
         enemiesSpawned = 0;
+        enemiesKilled = 0;
+        countEnemies = 0;
         currentScore = 0;
         currentLives = 4;
+        lastLive = 4;
 
         timerRunning = false;
         timerFinish = false;
@@ -89,16 +96,22 @@ public class GameController extends GameObject {
             return;
         }
 
-        //Comprueba la condición de victoria y derrota para pasar a la pantalla "Score"
+        //Comprueba la condición de victoria y derrota para pasar a la pantalla "Score" (para otro modo de juego)
         //if (currentLives <= 0 || currentScore >= MAX_SCORE){
         if (currentLives <= 0 || timerFinish){
             //Se ejecuta al instante, se puede meter un tiempo de espera para pasar a la pantalla final
             gameEngine.stopGame();
+            startStop();
+
+            int finalScore = calculateFinalScore();
 
             Context context = mainActivity.getApplicationContext();
             SharedPreferences sp = context.getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("finalScore", finalScore);
             editor.putInt("score", currentScore);
+            editor.putInt("enemies", enemiesKilled);
+            editor.putInt("lives", currentLives);
             editor.commit();
 
             ((ScaffoldActivity)mainActivity).scoreMenu();
@@ -108,8 +121,13 @@ public class GameController extends GameObject {
 
     @Override
     public void onDraw(Canvas canvas) {
-        //textScore.setText(String.valueOf(currentScore) + "/" + String.valueOf(MAX_SCORE));
+        textScore.setText(String.valueOf(currentScore));
 
+        if(currentLives == lastLive && countEnemies >= 20){
+            textX2.setVisibility(View.VISIBLE);
+        }else{
+            textX2.setVisibility(View.INVISIBLE);
+        }
 
         if(currentLives == 4){
             hit0.setVisibility(View.VISIBLE);
@@ -148,6 +166,10 @@ public class GameController extends GameObject {
         asteroidPool.add(asteroid);
     }
 
+    public int calculateFinalScore(){
+        return 0;
+    }
+
     //Lógica de funcionamiento del reloj a través de la funcionalidad de CountDownTimer y un flag
     // que recoge cuándo el reloj está en funcionamiento
     public void startStop(){
@@ -170,7 +192,7 @@ public class GameController extends GameObject {
             @Override
             public void onFinish() {
                 timerRunning = false;
-                textScore.setText("FIN");
+                textTime.setText("FIN");
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -211,7 +233,7 @@ public class GameController extends GameObject {
         timeLeftText += seconds
          */
         String timeLeftText = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        textScore.setText(timeLeftText);
+        textTime.setText(timeLeftText);
     }
 
     public void resetTimer(){

@@ -47,7 +47,7 @@ public class GameEngine implements Serializable {
         theGameView = gameView;
         theGameView.setGameObjects(this.gameObjects);
 
-        textScore = mainActivity.findViewById(R.id.text_score);
+        textScore = mainActivity.findViewById(R.id.text_time);
         //setTextScore("INICIO");
 
         QuadTree.init();

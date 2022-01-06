@@ -20,7 +20,8 @@ public class ScoreFragment extends BaseFragment {
 
     public static TextView scoreText, yourScoreText;
     public static Button mainMenu, playAgain;
-    public int scoreResult;
+
+    public int finalScore, enemiesKilled, score, lives;
 
     public ScoreFragment(){
 
@@ -39,11 +40,12 @@ public class ScoreFragment extends BaseFragment {
         yourScoreText.setText("Your score is:");
 
         SharedPreferences sp = getContext().getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
-        scoreResult = sp.getInt("score", 0);
+        finalScore = sp.getInt("finalScore", 0);
+        score = sp.getInt("score", 0);
+        enemiesKilled = sp.getInt("enemies", 0);
+        lives = sp.getInt("lives", 0);
 
-        scoreText.setText(String.valueOf(scoreResult));
-
-
+        scoreText.setText(String.valueOf(score));
 
         return rootView;
     }

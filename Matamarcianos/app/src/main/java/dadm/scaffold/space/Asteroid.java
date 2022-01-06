@@ -1,5 +1,7 @@
 package dadm.scaffold.space;
 
+import android.view.View;
+
 import dadm.scaffold.R;
 import dadm.scaffold.engine.GameEngine;
 import dadm.scaffold.engine.ScreenGameObject;
@@ -24,7 +26,7 @@ public class Asteroid extends Sprite {
 
     public Asteroid(GameController gameController, GameEngine gameEngine) {
         super(gameEngine, R.drawable.a10000);
-        this.speed = 150d * pixelFactor/1000d;
+        this.speed = 250d * pixelFactor/1000d;
         this.gameController = gameController;
         this.gameEngine = gameEngine;
 
@@ -53,8 +55,6 @@ public class Asteroid extends Sprite {
         // They initialize outside of the screen vertically
         positionY = -width;
         */
-
-
         // Asteroids initialize in the central 50% of the screen vertically
         positionY = gameEngine.random.nextInt(gameEngine.height/2)+gameEngine.height/4.0;
         //positionY = width;
@@ -116,7 +116,28 @@ public class Asteroid extends Sprite {
     @Override
     public void onCollision(GameEngine gameEngine, ScreenGameObject otherObject) {
         if (otherObject instanceof Bullet) {
-            gameController.currentScore += 100;
+            gameController.enemiesKilled += 1;
+            if(gameController.currentLives == gameController.lastLive){
+                gameController.countEnemies += 1;
+                if (gameController.countEnemies >= 20){
+                    if(gameController.currentLives == 4) gameController.currentScore += 220;
+                    if(gameController.currentLives == 3) gameController.currentScore += 210;
+                    if(gameController.currentLives == 2) gameController.currentScore += 200;
+                    if(gameController.currentLives == 1) gameController.currentScore += 190;
+                } else {
+                    if(gameController.currentLives == 4) gameController.currentScore += 120;
+                    if(gameController.currentLives == 3) gameController.currentScore += 110;
+                    if(gameController.currentLives == 2) gameController.currentScore += 100;
+                    if(gameController.currentLives == 1) gameController.currentScore += 90;
+                }
+            } else{
+                gameController.lastLive = gameController.currentLives;
+                gameController.countEnemies = 0;
+                if(gameController.currentLives == 4) gameController.currentScore += 120;
+                if(gameController.currentLives == 3) gameController.currentScore += 110;
+                if(gameController.currentLives == 2) gameController.currentScore += 100;
+                if(gameController.currentLives == 1) gameController.currentScore += 90;
+            }
         }
     }
     public void explode(GameEngine gameEngine) {
