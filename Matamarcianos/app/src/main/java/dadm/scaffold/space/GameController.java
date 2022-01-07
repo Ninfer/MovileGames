@@ -43,9 +43,12 @@ public class GameController extends GameObject {
     public ImageView hit0, hit1, hit2, hit3, hit4;
 
     //Background parallax variables
-    final ImageView backgroundOne, backgroundTwo;
-    final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, -1.0f); // 1.0 para la derecha, -1.0 para la izq
-
+    final ImageView backgroundOne1, backgroundOne2, backgroundTwo1, backgroundTwo2,
+            backgroundThree1, backgroundThree2, backgroundFour1, backgroundFour2;
+    final ValueAnimator animatorOne = ValueAnimator.ofFloat(0.0f, -1.0f); // 1.0 para la derecha, -1.0 para la izq
+    final ValueAnimator animatorTwo = ValueAnimator.ofFloat(0.0f, -1.0f);
+    final ValueAnimator animatorThree = ValueAnimator.ofFloat(0.0f, -1.0f);
+    final ValueAnimator animatorFour = ValueAnimator.ofFloat(0.0f, -1.0f);
 
     public GameController(GameEngine gameEngine, Activity mainActivity) {
         // We initialize the pool of items now
@@ -74,23 +77,83 @@ public class GameController extends GameObject {
         hit4.setVisibility(View.INVISIBLE);
 
         //Parallax behaviour
-        backgroundOne = mainActivity.findViewById(R.id.background_one);
-        backgroundTwo = mainActivity.findViewById(R.id.background_two);
+        backgroundOne1 = mainActivity.findViewById(R.id.background_one_1);
+        backgroundOne2 = mainActivity.findViewById(R.id.background_one_2);
 
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(10000L); //Cambiar la velocidad de la animación
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        backgroundTwo1 = mainActivity.findViewById(R.id.background_two_1);
+        backgroundTwo2 = mainActivity.findViewById(R.id.background_two_2);
+
+        backgroundThree1 = mainActivity.findViewById(R.id.background_three_1);
+        backgroundThree2 = mainActivity.findViewById(R.id.background_three_2);
+
+        backgroundFour1 = mainActivity.findViewById(R.id.background_four_1);
+        backgroundFour2 = mainActivity.findViewById(R.id.background_four_2);
+
+        //Backgroun 1
+        animatorOne.setRepeatCount(ValueAnimator.INFINITE);
+        animatorOne.setInterpolator(new LinearInterpolator());
+        animatorOne.setDuration(90000L); //Cambiar la velocidad de la animación
+        animatorOne.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 final float progress = (float) animation.getAnimatedValue();
-                final float width = backgroundOne.getWidth();
+                final float width = backgroundOne1.getWidth();
                 final float translationX = width * progress;
-                backgroundOne.setTranslationX(translationX);
-                backgroundTwo.setTranslationX(translationX + width);
+                backgroundOne1.setTranslationX(translationX);
+                backgroundOne2.setTranslationX(translationX + width);
             }
         });
-        animator.start();
+        animatorOne.start();
+
+        //Backgroun 2
+        animatorTwo.setRepeatCount(ValueAnimator.INFINITE);
+        animatorTwo.setInterpolator(new LinearInterpolator());
+        animatorTwo.setDuration(50000L); //Cambiar la velocidad de la animación
+        animatorTwo.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundTwo1.getWidth();
+                final float translationX = width * progress;
+                backgroundTwo1.setTranslationX(translationX);
+                backgroundTwo2.setTranslationX(translationX + width);
+            }
+        });
+        animatorTwo.start();
+
+        //Backgroun 3
+        animatorThree.setRepeatCount(ValueAnimator.INFINITE);
+        animatorThree.setInterpolator(new LinearInterpolator());
+        animatorThree.setDuration(30000L); //Cambiar la velocidad de la animación
+        animatorThree.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundThree1.getWidth();
+                final float translationX = width * progress;
+                backgroundThree1.setTranslationX(translationX);
+                backgroundThree2.setTranslationX(translationX + width);
+            }
+        });
+        animatorThree.start();
+
+        //Backgroun 4
+        animatorFour.setRepeatCount(ValueAnimator.INFINITE);
+        animatorFour.setInterpolator(new LinearInterpolator());
+        animatorFour.setDuration(20000L); //Cambiar la velocidad de la animación
+        animatorFour.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundFour1.getWidth();
+                final float translationX = width * progress;
+                backgroundFour1.setTranslationX(translationX);
+                backgroundFour2.setTranslationX(translationX + width);
+            }
+        });
+        animatorFour.start();
+
+
     }
 
     @Override

@@ -9,30 +9,67 @@
     tools:context="dadm.scaffold.GameFragment">
 
     <ImageView
-        android:id="@+id/background_one"
+        android:id="@+id/background_one_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/space_background_1"
-        android:scaleType="matrix"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_background_one_1"
+        android:visibility="visible"
+        android:contentDescription="TODO" />
 
     <ImageView
-        android:id="@+id/background_two"
+        android:id="@+id/background_one_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/space_background_2"
-        android:scaleType="matrix"/>
-    <ImageView
-        android:id="@+id/background_three"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/space_background_3"
-        android:scaleType="matrix"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_background_one_2"
+        android:visibility="visible" />
 
     <ImageView
-        android:id="@+id/background_four"
+        android:id="@+id/background_two_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/space_background_4"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_background_two_1"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/background_two_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_background_two_1"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/background_three_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_background_three_1"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/background_three_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_background_three_1"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/background_four_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/space_background_four_1"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/background_four_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/space_background_four_1"
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/text_x2"
