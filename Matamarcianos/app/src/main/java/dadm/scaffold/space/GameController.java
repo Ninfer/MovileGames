@@ -190,6 +190,7 @@ public class GameController extends GameObject {
         if (currentLives <= 0 || timerFinish){
             //Se ejecuta al instante, se puede meter un tiempo de espera para pasar a la pantalla final
             gameEngine.stopGame();
+            gameEngine.stopGame();
             startStop();
 
             int finalScore = calculateFinalScore();
