@@ -1,11 +1,13 @@
 package dadm.scaffold.space;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,11 @@ public class GameController extends GameObject {
     public TextView textTime, textScore, textX2;
     public ImageView hit0, hit1, hit2, hit3, hit4;
 
+    //Background parallax variables
+    final ImageView backgroundOne, backgroundTwo;
+    final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, -1.0f); // 1.0 para la derecha, -1.0 para la izq
+
+
     public GameController(GameEngine gameEngine, Activity mainActivity) {
         // We initialize the pool of items now
         for (int i=0; i<300; i++) {
@@ -65,6 +72,25 @@ public class GameController extends GameObject {
         hit2.setVisibility(View.INVISIBLE);
         hit3.setVisibility(View.INVISIBLE);
         hit4.setVisibility(View.INVISIBLE);
+
+        //Parallax behaviour
+        backgroundOne = mainActivity.findViewById(R.id.background_one);
+        backgroundTwo = mainActivity.findViewById(R.id.background_two);
+
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(10000L); //Cambiar la velocidad de la animación
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundOne.getWidth();
+                final float translationX = width * progress;
+                backgroundOne.setTranslationX(translationX);
+                backgroundTwo.setTranslationX(translationX + width);
+            }
+        });
+        animator.start();
     }
 
     @Override

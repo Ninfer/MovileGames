@@ -9,7 +9,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d502ed38-7d85-41a4-9fac-8d97a37ab1b8" name="Default Changelist" comment="" />
+    <list default="true" id="d502ed38-7d85-41a4-9fac-8d97a37ab1b8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/mipmap-hdpi/space_background_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/mipmap-hdpi/space_background_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/mipmap-hdpi/space_background_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/mipmap-hdpi/space_background_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/layout/fragment_game.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/layout/fragment_game.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Matamarcianos/app/src/main/res/values/colors.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
