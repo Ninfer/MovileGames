@@ -113,7 +113,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="25dp"
         android:contentDescription="@string/hit"
-        android:rotation="-90"
+        android:rotation="0"
         android:src="@drawable/ship" />
 
     <TextView
