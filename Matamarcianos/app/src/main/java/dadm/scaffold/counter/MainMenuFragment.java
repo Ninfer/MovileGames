@@ -49,7 +49,6 @@ public class MainMenuFragment extends BaseFragment /*implements View.OnClickList
 
         Animation titleAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.title_enter);
-        view.findViewById(R.id.GameTitle).startAnimation(titleAnimation);
 
         Animation subtitleAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.subtitle_enter);
