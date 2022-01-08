@@ -35,7 +35,7 @@ public class SpaceShipPlayer extends Sprite {
     private boolean hited = true;
 
     public SpaceShipPlayer(GameEngine gameEngine, GameController gameController){
-        super(gameEngine, R.drawable.ship_a);
+        super(gameEngine, R.drawable.ship_holder);
         nextResourceIntegerId = R.drawable.ship;
         super.setBitmap(nextResourceIntegerId);
         speedFactor = pixelFactor * 250d / 1000d; // We want to move at 100px per second on a 400px tall screen
@@ -147,7 +147,7 @@ public class SpaceShipPlayer extends Sprite {
                 Asteroid a = (Asteroid) otherObject;
                 a.removeObject(gameEngine);
                 gameEngine.onGameEvent(GameEvent.SpaceshipHit);
-                nextResourceIntegerId = R.drawable.ship_inv;
+                nextResourceIntegerId = R.drawable.ship_shield;
                 super.setBitmap(nextResourceIntegerId);
             }
             else {

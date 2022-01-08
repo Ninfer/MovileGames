@@ -22,7 +22,7 @@ import dadm.scaffold.engine.GameObject;
 
 public class GameController extends GameObject {
 
-    private static final int TIME_BETWEEN_ENEMIES = 150;
+    private static final int TIME_BETWEEN_ENEMIES = 200;
     private static final int MAX_SCORE = 10000;
     private static final long START_TIME_IN_MILLIS = 90000; //2m 30s (1000 = 1s)
     public int currentScore;
@@ -43,12 +43,16 @@ public class GameController extends GameObject {
     public ImageView hit0, hit1, hit2, hit3, hit4;
 
     //Background parallax variables
-    final ImageView backgroundOne1, backgroundOne2, backgroundTwo1, backgroundTwo2,
-            backgroundThree1, backgroundThree2, backgroundFour1, backgroundFour2;
+    final ImageView backgroundOne1, backgroundOne2,
+            backgroundTwo1, backgroundTwo2,
+            backgroundThree1, backgroundThree2,
+            backgroundFour1, backgroundFour2,
+            backgroundFive1, backgroundFive2;
     final ValueAnimator animatorOne = ValueAnimator.ofFloat(0.0f, -1.0f); // 1.0 para la derecha, -1.0 para la izq
     final ValueAnimator animatorTwo = ValueAnimator.ofFloat(0.0f, -1.0f);
     final ValueAnimator animatorThree = ValueAnimator.ofFloat(0.0f, -1.0f);
     final ValueAnimator animatorFour = ValueAnimator.ofFloat(0.0f, -1.0f);
+    final ValueAnimator animatorFive = ValueAnimator.ofFloat(0.0f, -1.0f);
 
     public GameController(GameEngine gameEngine, Activity mainActivity) {
         // We initialize the pool of items now
@@ -88,6 +92,9 @@ public class GameController extends GameObject {
 
         backgroundFour1 = mainActivity.findViewById(R.id.background_four_1);
         backgroundFour2 = mainActivity.findViewById(R.id.background_four_2);
+
+        backgroundFive1 = mainActivity.findViewById(R.id.background_five_1);
+        backgroundFive2 = mainActivity.findViewById(R.id.background_five_2);
 
         //Backgroun 1
         animatorOne.setRepeatCount(ValueAnimator.INFINITE);
@@ -153,7 +160,21 @@ public class GameController extends GameObject {
         });
         animatorFour.start();
 
-
+        //Backgroun 5
+        animatorFive.setRepeatCount(ValueAnimator.INFINITE);
+        animatorFive.setInterpolator(new LinearInterpolator());
+        animatorFive.setDuration(1000L); //Cambiar la velocidad de la animación
+        animatorFive.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundFive1.getWidth();
+                final float translationX = width * progress;
+                backgroundFive1.setTranslationX(translationX);
+                backgroundFive2.setTranslationX(translationX + width);
+            }
+        });
+        animatorFive.start();
     }
 
     @Override

@@ -20,8 +20,8 @@ public class Bullet extends Sprite {
     private SpaceShipPlayer parent;
 
     public Bullet(GameEngine gameEngine){
-        super(gameEngine, R.drawable.bullet);
-        //super.setBitmap(R.drawable.bullet);
+        super(gameEngine, R.drawable.bullet_holder);
+        super.setBitmap(R.drawable.bullet);
 
         altBullet = gameEngine.theInputController.altFireMode;
 
@@ -80,7 +80,7 @@ public class Bullet extends Sprite {
             removeObject(gameEngine);
             Asteroid a = (Asteroid) otherObject;
             a.removeObject(gameEngine);
-            //a.explode(gameEngine);
+            a.explode(gameEngine);
             gameEngine.onGameEvent(GameEvent.AsteroidHit);
             // Add some score
         }

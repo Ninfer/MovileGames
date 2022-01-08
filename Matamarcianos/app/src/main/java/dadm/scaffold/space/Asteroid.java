@@ -11,7 +11,7 @@ import dadm.scaffold.engine.particles.ScaleInitializer;
 import dadm.scaffold.engine.particles.ScaleModifier;
 
 public class Asteroid extends Sprite {
-    public static final int EXPLOSION_PARTICLES = 15;
+    public static final int EXPLOSION_PARTICLES = 3;
     private final GameController gameController;
     private final GameEngine gameEngine;
 
@@ -25,7 +25,8 @@ public class Asteroid extends Sprite {
     private ParticleSystem mExplisionParticleSystem;
 
     public Asteroid(GameController gameController, GameEngine gameEngine) {
-        super(gameEngine, R.drawable.a10000);
+        super(gameEngine, R.drawable.asteroid_2);
+        //super.setBitmap(R.drawable.asteroid_2);
         this.speed = 250d * pixelFactor/1000d;
         this.gameController = gameController;
         this.gameEngine = gameEngine;
@@ -36,7 +37,7 @@ public class Asteroid extends Sprite {
         mTrailParticleSystem = new ParticleSystem(gameEngine, 50, R.drawable.particle_dust, 600)
                 .addModifier(new ScaleModifier(1, 2, 200, 600))
                 .setFadeOut(200);
-        mExplisionParticleSystem = new ParticleSystem(gameEngine, EXPLOSION_PARTICLES, R.drawable.particle_asteroid_1, 700)
+        mExplisionParticleSystem = new ParticleSystem(gameEngine, EXPLOSION_PARTICLES, R.drawable.particle, 700)
                 .setSpeedRange(15, 40)
                 .setFadeOut(300)
                 .setInitialRotationRange(0, 360)
@@ -97,7 +98,7 @@ public class Asteroid extends Sprite {
         }
         mTrailParticleSystem.setPosition(positionX + width / 2.0, positionY + height / 2.0);
         // Check of the sprite goes out of the screen and return it to the pool if so
-        if (positionX < 0 || positionY < 0 || positionY > maxY) {
+        if (positionX < -200 || positionY < 0|| positionY > maxY + 200) {
             // Return to the pool
             gameEngine.removeGameObject(this);
             gameController.returnToPool(this);
