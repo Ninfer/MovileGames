@@ -3,7 +3,7 @@
     <integer name="activity_animation_duration">350</integer>
     <integer name="tittle_start_offset">400</integer>
     <integer name="tittle_duration">1600</integer>
-    <integer name="subtitle_start_offset">2000</integer>
+    <integer name="subtitle_start_offset">1000</integer>
     <integer name="subtitle_duration">600</integer>
     <integer name="menu_duration">300</integer>
     <integer name="menu_start_offset">0</integer>

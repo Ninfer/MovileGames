@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import dadm.scaffold.BaseFragment;
 import dadm.scaffold.R;
@@ -16,6 +17,9 @@ import dadm.scaffold.ScaffoldActivity;
 
 
 public class MainMenuFragment extends BaseFragment /*implements View.OnClickListener*/ {
+
+    public ImageView logoImg;
+
     public MainMenuFragment() {
     }
 
@@ -23,6 +27,14 @@ public class MainMenuFragment extends BaseFragment /*implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
+        /*
+        logoImg = rootView.findViewById(R.id.img_logo);
+        Animation pulseAnimation = AnimationUtils.loadAnimation(getActivity(),
+                R.anim.button_pulse);
+        rootView.findViewById(R.id.img_logo).startAnimation(pulseAnimation);
+         */
+
         return rootView;
     }
 
@@ -42,9 +54,11 @@ public class MainMenuFragment extends BaseFragment /*implements View.OnClickList
             }
         });
 
+
         Animation pulseAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.button_pulse);
         view.findViewById(R.id.btn_start).startAnimation(pulseAnimation);
+        /*
         view.findViewById(R.id.btn_quit).startAnimation(pulseAnimation);
 
         Animation titleAnimation = AnimationUtils.loadAnimation(getActivity(),
@@ -53,6 +67,7 @@ public class MainMenuFragment extends BaseFragment /*implements View.OnClickList
         Animation subtitleAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.subtitle_enter);
         view.findViewById(R.id.GameSubtitle).startAnimation(subtitleAnimation);
+         */
     }
 /*
     @Override

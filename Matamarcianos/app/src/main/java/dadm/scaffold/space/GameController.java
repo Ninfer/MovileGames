@@ -25,6 +25,7 @@ public class GameController extends GameObject {
     private static final int TIME_BETWEEN_ENEMIES = 200;
     private static final int MAX_SCORE = 10000;
     private static final long START_TIME_IN_MILLIS = 90000; //2m 30s (1000 = 1s)
+    //private static final long START_TIME_IN_MILLIS = 10000; //2m 30s (1000 = 1s)
     public int currentScore;
     public int currentLives;
     public int enemiesKilled, lastLive, countEnemies;
@@ -214,12 +215,9 @@ public class GameController extends GameObject {
             gameEngine.stopGame();
             startStop();
 
-            int finalScore = calculateFinalScore();
-
             Context context = mainActivity.getApplicationContext();
             SharedPreferences sp = context.getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putInt("finalScore", finalScore);
             editor.putInt("score", currentScore);
             editor.putInt("enemies", enemiesKilled);
             editor.putInt("lives", currentLives);
@@ -275,10 +273,6 @@ public class GameController extends GameObject {
 
     public void returnToPool(Asteroid asteroid) {
         asteroidPool.add(asteroid);
-    }
-
-    public int calculateFinalScore(){
-        return 0;
     }
 
     //Lógica de funcionamiento del reloj a través de la funcionalidad de CountDownTimer y un flag

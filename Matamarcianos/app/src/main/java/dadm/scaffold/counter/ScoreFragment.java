@@ -2,6 +2,7 @@ package dadm.scaffold.counter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ import dadm.scaffold.ScaffoldActivity;
 
 public class ScoreFragment extends BaseFragment {
 
-    public static TextView scoreText, yourScoreText;
+    public final int MAX_SCORE_TO_WIN = 35000;
+
+    public static TextView scoreText, yourScoreTextWin, yourScoreTextLose, record;
     public static Button mainMenu, playAgain;
 
-    public int finalScore, enemiesKilled, score, lives;
+    public int  enemiesKilled, score, lives, maxScore;
 
     public ScoreFragment(){
 
@@ -32,21 +35,31 @@ public class ScoreFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_score, container, false);
 
-        mainMenu = rootView.findViewById(R.id.btn_main_menu);
-        mainMenu.setText("MAIN MENU");
 
+        mainMenu = rootView.findViewById(R.id.btn_main_menu);
         scoreText = rootView.findViewById(R.id.text_score_result);
-        yourScoreText = rootView.findViewById(R.id.text_your_score);
-        yourScoreText.setText("Your score is:");
+        yourScoreTextWin = rootView.findViewById(R.id.text_your_score_win);
+        yourScoreTextLose = rootView.findViewById(R.id.text_your_score_lose);
+        record = rootView.findViewById(R.id.record_text);
+
+        record.setVisibility(View.INVISIBLE);
+        yourScoreTextLose.setVisibility(View.INVISIBLE);
+        yourScoreTextWin.setVisibility(View.INVISIBLE);
 
         SharedPreferences sp = getContext().getSharedPreferences("defaultSettings", Context.MODE_PRIVATE);
-        finalScore = sp.getInt("finalScore", 0);
         score = sp.getInt("score", 0);
         enemiesKilled = sp.getInt("enemies", 0);
         lives = sp.getInt("lives", 0);
+        maxScore = sp.getInt("maxScore", 0);
 
-        scoreText.setText(String.valueOf(score));
+        makeFinalScreen(rootView);
 
+        if (score > maxScore){
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("maxScore", score);
+            editor.commit();
+            record.setVisibility(View.VISIBLE);
+        }
         return rootView;
     }
 
@@ -71,10 +84,12 @@ public class ScoreFragment extends BaseFragment {
             }
         });
 
+        /*
         Animation pulseAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.button_pulse);
         view.findViewById(R.id.btn_play_again).startAnimation(pulseAnimation);
         view.findViewById(R.id.btn_main_menu).startAnimation(pulseAnimation);
+         */
     }
 
     public boolean onBackPressed() {
@@ -82,5 +97,22 @@ public class ScoreFragment extends BaseFragment {
         Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
         getFragmentManager().beginTransaction().remove(frag).commit();
         return true;
+    }
+
+    public void makeFinalScreen(View rootView){
+
+        if (score >= MAX_SCORE_TO_WIN){
+            rootView.setBackground(getResources().getDrawable(R.drawable.rounded_shape_score_green));
+            rootView.getBackground().setAlpha(127);
+
+            yourScoreTextWin.setVisibility(View.VISIBLE);
+        } else{
+            rootView.setBackground(getResources().getDrawable(R.drawable.rounded_shape_score_red));
+            rootView.getBackground().setAlpha(127);
+
+            yourScoreTextLose.setVisibility(View.VISIBLE);
+        }
+
+        scoreText.setText(String.valueOf(score) + " / " + String.valueOf(MAX_SCORE_TO_WIN));
     }
 }

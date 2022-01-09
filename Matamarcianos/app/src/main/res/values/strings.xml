@@ -3,7 +3,7 @@
     <string name="title_activity_main">Asteroids Scrapyard</string>
     <string name="subtitle_activity_main">by Mario and Borja</string>
     <string name="hello_world">Hello</string>
-    <string name="pause">Pause game</string>
+    <string name="pause">game paused</string>
     <string name="start">Start game</string>
     <string name="quit">Quit game</string>
     <string name="game_title">¡Matamarcianos!</string>
@@ -11,7 +11,9 @@
     <string name="pause_dialog_message">pause message</string>
     <string name="resume">resume</string>
     <string name="stop">stop</string>
-    <string name="your_score">Your score is</string>
+    <string name="your_score_win">YOU WIN! :D</string>
+    <string name="your_score_lose">YOU LOSE :(</string>
+    <string name="new_record">NEW RECORD!!</string>
     <string name="play_again">Play again</string>
     <string name="main_menu">Main menu</string>
     <string name="hit">hit</string>

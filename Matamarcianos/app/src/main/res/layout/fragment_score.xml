@@ -4,20 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="@color/colorAccent">
+    android:background="@drawable/rounded_shape_score_red">
 
     <TextView
-        android:id="@+id/text_your_score"
+        android:id="@+id/text_your_score_win"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="40dp"
-        android:text="@string/text_your_score"
-        android:textColor="#212121"
-        android:textSize="20sp"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="@font/space_age"
+        android:text="@string/your_score_win"
+        android:textColor="@color/colorFont"
+        android:textSize="40sp"
         android:textStyle="bold"
-        tools:text="@string/your_score" />
+        tools:text="@string/your_score_win" />
+
+    <TextView
+        android:id="@+id/text_your_score_lose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="@font/space_age"
+        android:text="@string/your_score_lose"
+        android:textColor="@color/colorFont"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        tools:text="@string/your_score_lose" />
 
     <TextView
         android:id="@+id/text_score_result"
@@ -25,31 +38,48 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="100dp"
-        android:layout_marginTop="40dp"
         android:text="@string/text_score_result"
-        android:textColor="#212121"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="25sp"
+        android:fontFamily="@font/space_age"
+        android:textColor="@color/colorFont" />
 
     <Button
         android:id="@+id/btn_play_again"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="100dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginBottom="30dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/space_age"
         android:text="@string/play_again"
         tools:text="@string/play_again" />
 
     <Button
         android:id="@+id/btn_main_menu"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/space_age"
         android:text="@string/main_menu"
         tools:text="@string/main_menu" />
+
+    <TextView
+        android:id="@+id/record_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="30dp"
+        android:fontFamily="@font/space_age"
+        android:rotation="-15"
+        android:text="@string/new_record"
+        android:textColor="@color/colorTimer"
+        android:textSize="20sp"
+        tools:text="@string/new_record" />
 
 
 </FrameLayout>

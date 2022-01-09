@@ -36,6 +36,7 @@ public class GameMenuFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_menu, container, false);
+        rootView.getBackground().setAlpha(127);
 
         theGameEngine = ((ScaffoldActivity) getActivity()).getGameEngine();
         theGameController = ((ScaffoldActivity) getActivity()).getGameController();

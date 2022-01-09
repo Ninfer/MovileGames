@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import dadm.scaffold.BaseFragment;
@@ -136,16 +137,18 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void playOrPause() {
-        Button button = (Button) getView().findViewById(R.id.btn_play_pause);
+        ImageButton button = (ImageButton) getView().findViewById(R.id.btn_play_pause);
         if (theGameEngine.isPaused()) {
             theGameEngine.resumeGame();
             theGameController.startStop();
-            button.setText(R.string.pause);
+            //button.setText(R.string.pause);
+            button.setImageResource(R.drawable.media_pause);
             Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
             getFragmentManager().beginTransaction().remove(frag).commit();
         }
         else {
-            button.setText(R.string.resume);
+            //button.setText(R.string.resume);
+            button.setImageResource(R.drawable.play);
             pauseGameAndShowPauseDialog();
         }
     }
