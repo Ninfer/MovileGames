@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.io.Serializable;
 
 import dadm.scaffold.BaseFragment;
+import dadm.scaffold.GameFragment;
 import dadm.scaffold.R;
 import dadm.scaffold.ScaffoldActivity;
 import dadm.scaffold.engine.GameEngine;
@@ -25,8 +27,7 @@ public class GameMenuFragment extends BaseFragment {
     public GameEngine theGameEngine;
     public GameController theGameController;
 
-    public static TextView pauseText;
-    public static Button pause, resume;
+    public ImageButton pause;
 
     public GameMenuFragment(){
     }
@@ -37,6 +38,8 @@ public class GameMenuFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_game_menu, container, false);
         rootView.getBackground().setAlpha(127);
+
+        pause = rootView.findViewById(R.id.btn_play_pause);
 
         theGameEngine = ((ScaffoldActivity) getActivity()).getGameEngine();
         theGameController = ((ScaffoldActivity) getActivity()).getGameController();
@@ -53,6 +56,8 @@ public class GameMenuFragment extends BaseFragment {
             public void onClick(View view) {
                 theGameEngine.resumeGame();
                 theGameController.startStop();
+                GameFragment.changeButtonPause();
+                //pause.setImageResource(R.drawable.media_pause);
 
                 Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
                 getFragmentManager().beginTransaction().remove(frag).commit();
@@ -83,6 +88,7 @@ public class GameMenuFragment extends BaseFragment {
     public boolean onBackPressed() {
         theGameEngine.resumeGame();
         theGameController.startStop();
+        GameFragment.changeButtonPause();
 
         Fragment frag = getFragmentManager().findFragmentById(R.id.menu_layout);
         getFragmentManager().beginTransaction().remove(frag).commit();

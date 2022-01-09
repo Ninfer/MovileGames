@@ -35,7 +35,7 @@ public class GameController extends GameObject {
     private Activity mainActivity;
     private GameEngine theGameEngine;
 
-
+    //Timer variables
     private long timeInMilliseconds = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
     private boolean timerRunning, timerFinish;

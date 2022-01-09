@@ -28,6 +28,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     private GameEngine theGameEngine;
     public GameController theGameController;
 
+    public static View view;
+
     public GameFragment() {
     }
 
@@ -35,6 +37,8 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_game, container, false);
+
+        view = rootView;
 
         return rootView;
     }
@@ -94,8 +98,10 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
     public boolean onBackPressed() {
         if (theGameEngine.isRunning()) {
             pauseGameAndShowPauseDialog();
+            changeButtonPlay();
             return true;
         }
+        changeButtonPause();
         return false;
     }
 
@@ -151,5 +157,14 @@ public class GameFragment extends BaseFragment implements View.OnClickListener {
             button.setImageResource(R.drawable.play);
             pauseGameAndShowPauseDialog();
         }
+    }
+
+    public static void changeButtonPause(){
+        ImageButton button = (ImageButton) view.findViewById(R.id.btn_play_pause);
+        button.setImageResource(R.drawable.media_pause);
+    }
+    public static void changeButtonPlay(){
+        ImageButton button = (ImageButton) view.findViewById(R.id.btn_play_pause);
+        button.setImageResource(R.drawable.play);
     }
 }
